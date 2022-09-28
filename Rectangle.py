@@ -131,4 +131,3 @@ class Rectangle:
         self._topleft = Vector2d(self._midtop.x-half__width,self._midtop.y)
         self._bottomright = Vector2d(self._midbottom.x+half__width,self._midbottom.y)
         self._bottomleft = Vector2d(self._midbottom.x-half__width,self._midbottom.y)
-
