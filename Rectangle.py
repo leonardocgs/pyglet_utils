@@ -44,6 +44,18 @@ class Rectangle:
     @property
     def y(self):
         return self.center.y
+    @property
+    def left(self):
+        return self.mid_left.x
+    @property
+    def right(self):
+        return self.mid_right.x
+    @property
+    def top(self):
+        return self.mid_top.y
+    @property
+    def bottom(self):
+        return self.mid_bottom.y
     @center.setter
     def center(self,new_center:"Vector2d"):
         if (isinstance(new_center,Vector2d)):
@@ -105,6 +117,25 @@ class Rectangle:
     def y(self,new_y:int):
         self.center = Vector2d(self.x,new_y)
         self.__compute_points()
+    @left.setter
+    def left(self,distance:float):
+        add_vector = Vector2d(distance,0)
+        self.mid_left -= add_vector
+         
+    @right.setter
+    def right(self,distance:float):
+        add_vector = Vector2d(distance,0)
+        self.mid_right += add_vector
+    
+    @top.setter
+    def top(self,distance:float):
+        add_vector = Vector2d(0,distance)
+        self.mid_top += add_vector
+    
+    @bottom.setter
+    def bottom(self,distance:float):
+        add_vector = Vector2d(0,distance)
+        self.mid_bottom -= add_vector
     @rotation.setter
     def rotation(self, angle:int):
         if(angle == 90 or angle == 270):
@@ -131,3 +162,7 @@ class Rectangle:
         self._topleft = Vector2d(self._midtop.x-half__width,self._midtop.y)
         self._bottomright = Vector2d(self._midbottom.x+half__width,self._midbottom.y)
         self._bottomleft = Vector2d(self._midbottom.x-half__width,self._midbottom.y)
+    
+    def is_interior_point(self,vector:"Vector2d"):
+        return self.x >= self.left and self.y <= self.right and self.y>=self.bottom and self.y<=self.top
+
