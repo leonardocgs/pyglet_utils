@@ -188,3 +188,4 @@ class GameObject():
     def rotation(self, angle:int):
         self._rectangle.rotation = angle
         self.connect_GameObject_with_rectangle()
+        self._sprite.rotation = angle
