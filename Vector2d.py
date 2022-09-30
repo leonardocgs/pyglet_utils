@@ -2,9 +2,9 @@ import math
 from typing import List, Tuple
 
 class Vector2d:
-    def __init__(self,x:float,y:float):
-        self.x = x
-        self.y = y
+    def __init__(self,x:int,y:int):
+        self.x:int = x
+        self.y:int = y
     
     def __sub__(self,vector:"Vector2d")->"Vector2d":
         if isinstance(vector,Vector2d):
@@ -45,7 +45,7 @@ class Vector2d:
         
     def __repr__(self):
         return str((self.x,self.y))
-    def translate(self,x:float=0,y:float=0):
+    def translate(self,x:int=0,y:int=0):
         
         if(x!=0):
             self.x = x

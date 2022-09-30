@@ -2,10 +2,10 @@ from Vector2d import Vector2d
 import copy
 class Rectangle:
 
-    def __init__(self,middle_point:"Vector2d" ,_width:float,_height:float, rotation = 0):
+    def __init__(self,middle_point:"Vector2d" ,_width,_height, rotation = 0):
 
-        self.width = _width
-        self.height = _height
+        self.__width = _width
+        self.__height = _height
         self._center = middle_point
         self.rotation = rotation
     @property
@@ -56,6 +56,18 @@ class Rectangle:
     @property
     def bottom(self):
         return self.mid_bottom.y
+    @property
+    def position(self):
+        return self.center
+    @property
+    def width(self):
+        return self.__width
+    @property
+    def height(self):
+        return self.__height
+    @position.setter
+    def position(self,vector_position:"Vector2d"):
+        self.center = vector_position
     @center.setter
     def center(self,new_center:"Vector2d"):
         if (isinstance(new_center,Vector2d)):
@@ -118,22 +130,22 @@ class Rectangle:
         self.center = Vector2d(self.x,new_y)
         self.__compute_points()
     @left.setter
-    def left(self,distance:float):
+    def left(self,distance:int):
         add_vector = Vector2d(distance,0)
         self.mid_left -= add_vector
          
     @right.setter
-    def right(self,distance:float):
+    def right(self,distance:int):
         add_vector = Vector2d(distance,0)
         self.mid_right += add_vector
     
     @top.setter
-    def top(self,distance:float):
+    def top(self,distance:int):
         add_vector = Vector2d(0,distance)
         self.mid_top += add_vector
     
     @bottom.setter
-    def bottom(self,distance:float):
+    def bottom(self,distance:int):
         add_vector = Vector2d(0,distance)
         self.mid_bottom -= add_vector
     @rotation.setter
@@ -146,9 +158,19 @@ class Rectangle:
             self._width = self.width
         self.__compute_points()
         self._rotation = angle
+    @width.setter
+    def width(self,new_width):
+        self.__width = new_width
+        self._width = new_width
+        self.__compute_points()
+    @height.setter
+    def height(self,new_height):
+        self.__height = new_height
+        self._height = new_height
+        self.__compute_points()
     def __compute_points(self):
-        half__width = self._width /2 
-        half__height = self._height /2
+        half__width:int = self._width /2 
+        half__height:int= self._height /2
         self._midleft = Vector2d(self.center.x - half__width,self.center.y)
         self._midright = Vector2d(self.center.x + half__width,self.center.y)
         self._midtop = Vector2d(self.center.x, self.center.y + half__height)
