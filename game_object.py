@@ -26,9 +26,12 @@ class GameObject():
         self._sprite.draw()
     def delete(self):
         self._sprite.delete()
+    def is_interior_point(self, vector:"Vector2d"):
+        return self._rectangle.is_interior_point(vector)
     @property
     def mid_left(self):
          return self._rectangle.mid_left
+
     @property
     def mid_right(self):
         return self._rectangle.mid_right
