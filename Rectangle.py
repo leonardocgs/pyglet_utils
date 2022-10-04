@@ -30,7 +30,11 @@ class Rectangle:
         Abscissa e ordenada:
             x: Abcissa da posição do retângulo
             y :Ordenada da posição do retângulo
-
+        Mover em relação a uma direção:
+            left: Move à esquerda
+            right: Move à direita
+            top: Move para cima
+            bottom :move para baixo
     :param middle_point: A posição do ponto médio das diagonais do retângulo.
     :type middle_point: "Vector2d"
     :param width: Largura do retângulo.
@@ -163,7 +167,13 @@ class Rectangle:
         return copy.copy(self._bottomright)
 
     @property
-    def rotation(self) -> "Vector2d":
+    def rotation(self):
+        """
+        Getter para o ângulo de rotação do retângulo.
+
+        :return: Ângulo de rotação.
+        :rtype: int
+        """
         return self._rotation
 
     @property
@@ -482,7 +492,7 @@ class Rectangle:
     @bottom.setter
     def bottom(self, distance: int):
         """
-        Setter para o botom do retângulo.
+        Setter para o bottom do retângulo.
         Desloca o retângulo para baixo.
         Por exemplo: rec.bottom = 3
         desloca o retângulo 3 pontos para baixo.
@@ -569,8 +579,8 @@ class Rectangle:
 
     def is_interior_point(self, vector: "Vector2d"):
         """
-        Verifica se o ponto correspondente ao vetor é
-        interior ao retângulo.
+        Verifica se o ponto correspondente ao vetor passado
+        como argumento é interior ao retângulo.
 
         :param vector: Vetor que representa o ponto para checar.
         :type vector: "Vector2d"
