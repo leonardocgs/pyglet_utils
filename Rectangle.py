@@ -26,7 +26,7 @@ class Rectangle:
         return copy.copy(self._mid_right)
 
     @property
-    def mid_top(self):
+    def top_mid(self):
         return copy.copy(self._midtop)
 
     @property
@@ -71,7 +71,7 @@ class Rectangle:
 
     @property
     def top(self):
-        return self.mid_top.y
+        return self.top_mid.y
 
     @property
     def bottom(self):
@@ -117,10 +117,10 @@ class Rectangle:
             self._center += vector_to_add
             self.__compute_points()
 
-    @mid_top.setter
-    def mid_top(self, new_mid_top: "Vector2d"):
-        if isinstance(new_mid_top, Vector2d):
-            vector_to_add = new_mid_top.distance_vector(self._midtop)
+    @top_mid.setter
+    def top_mid(self, new_top_mid: "Vector2d"):
+        if isinstance(new_top_mid, Vector2d):
+            vector_to_add = new_top_mid.distance_vector(self._midtop)
             self._center += vector_to_add
             self.__compute_points()
 
@@ -188,7 +188,7 @@ class Rectangle:
     @top.setter
     def top(self, distance: int):
         add_vector = Vector2d(0, distance)
-        self._mid_top += add_vector
+        self._top_mid += add_vector
 
     @bottom.setter
     def bottom(self, distance: int):

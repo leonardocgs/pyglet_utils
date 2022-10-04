@@ -70,8 +70,8 @@ class GameObject:
         return self._rectangle.right_mid
 
     @property
-    def mid_top(self):
-        return self._rectangle.mid_top
+    def top_mid(self):
+        return self._rectangle.top_mid
 
     @property
     def mid_bottom(self):
@@ -160,9 +160,9 @@ class GameObject:
         self._rectangle.right_mid = new_right_mid
         self.connect_GameObject_with_rectangle()
 
-    @mid_top.setter
-    def mid_top(self, new_mid_top: "Vector2d"):
-        self._rectangle.mid_top = new_mid_top
+    @top_mid.setter
+    def top_mid(self, new_top_mid: "Vector2d"):
+        self._rectangle.top_mid = new_top_mid
         self.connect_GameObject_with_rectangle()
 
     @mid_bottom.setter
@@ -202,9 +202,9 @@ class GameObject:
         self._rectangle.right_mid = new_right_mid
         self.connect_GameObject_with_rectangle()
 
-    @mid_top.setter
-    def mid_top(self, new_mid_top: "Vector2d"):
-        self._rectangle.mid_top = new_mid_top
+    @top_mid.setter
+    def top_mid(self, new_top_mid: "Vector2d"):
+        self._rectangle.top_mid = new_top_mid
         self.connect_GameObject_with_rectangle()
 
     @mid_bottom.setter

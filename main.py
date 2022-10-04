@@ -27,12 +27,12 @@ segundo.x = primeiro.x
 primeiro.y = segundo.y
 segundo.x = 400
 segundo.y = 250
+segundo.top_mid = Vector2d(400, 500)
 
 
 @window.event
 def on_draw():
     segundo.draw()
-    primeiro.draw()
 
 
 pyglet.app.run()
