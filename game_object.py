@@ -5,7 +5,13 @@ from Vector2d import Vector2d
 
 
 class GameObject:
-    def __init__(self, position: "Vector2d", img_path: str, batch=None, rotation=0):
+    def __init__(
+        self,
+        position: "Vector2d",
+        img_path: str,
+        batch=None,
+        rotation=0,
+    ):
         """
         [TODO:description]
 
@@ -25,9 +31,17 @@ class GameObject:
         self._height = self._image.height
         self._rotation = rotation
         self._position = position
-        self._rectangle = Rectangle(position, self._width, self._height, self._rotation)
+        self._rectangle = Rectangle(
+            position,
+            self._width,
+            self._height,
+            self._rotation,
+        )
         self._sprite = pyglet.sprite.Sprite(
-            self._image, x=self._rectangle.x, y=self._rectangle.y, batch=batch
+            self._image,
+            x=self._rectangle.x,
+            y=self._rectangle.y,
+            batch=batch,
         )
 
     def connect_GameObject_with_rectangle(self):
@@ -48,12 +62,12 @@ class GameObject:
         return self._rectangle.is_interior_point(vector)
 
     @property
-    def mid_left(self):
-        return self._rectangle.mid_left
+    def left_mid(self):
+        return self._rectangle.left_mid
 
     @property
-    def mid_right(self):
-        return self._rectangle.mid_right
+    def right_mid(self):
+        return self._rectangle.right_mid
 
     @property
     def mid_top(self):
@@ -101,7 +115,10 @@ class GameObject:
 
     @property
     def position(self):
-        return (self._position.x, self._position.y)
+        return (
+            self._position.x,
+            self._position.y,
+        )
 
     @property
     def scale(self):
@@ -121,7 +138,7 @@ class GameObject:
 
     @property
     def y(self):
-        return self._sprite.x
+        return self._sprite.y
 
     @position.setter
     def position(self, vector_position: "Vector2d"):
@@ -133,14 +150,14 @@ class GameObject:
         self._rectangle.center = new_center
         self.connect_GameObject_with_rectangle()
 
-    @mid_left.setter
-    def mid_left(self, new_mid_left: "Vector2d"):
-        self._rectangle.mid_left = new_mid_left
+    @left_mid.setter
+    def left_mid(self, new_left_mid: "Vector2d"):
+        self._rectangle.left_mid = new_left_mid
         self.connect_GameObject_with_rectangle()
 
-    @mid_right.setter
-    def mid_right(self, new_mid_right: "Vector2d"):
-        self._rectangle.mid_right = new_mid_right
+    @right_mid.setter
+    def right_mid(self, new_right_mid: "Vector2d"):
+        self._rectangle.right_mid = new_right_mid
         self.connect_GameObject_with_rectangle()
 
     @mid_top.setter
@@ -175,14 +192,14 @@ class GameObject:
         self._rectangle.center = new_center
         self.connect_GameObject_with_rectangle()
 
-    @mid_left.setter
-    def mid_left(self, new_mid_left: "Vector2d"):
-        self._rectangle.mid_left = new_mid_left
+    @left_mid.setter
+    def left_mid(self, new_left_mid: "Vector2d"):
+        self._rectangle.left_mid = new_left_mid
         self.connect_GameObject_with_rectangle()
 
-    @mid_right.setter
-    def mid_right(self, new_mid_right: "Vector2d"):
-        self._rectangle.mid_right = new_mid_right
+    @right_mid.setter
+    def right_mid(self, new_right_mid: "Vector2d"):
+        self._rectangle.right_mid = new_right_mid
         self.connect_GameObject_with_rectangle()
 
     @mid_top.setter

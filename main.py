@@ -14,12 +14,19 @@ segundo = gameObject = GameObject(
 )
 primeiro.scale = 0.25
 segundo.scale = 0.25
-segundo.mid_bottom = Vector2d(segundo.x, 250)
-segundo.mid_top = Vector2d(segundo.x, 250)
+segundo.mid_bottom = Vector2d(350, 0)
+print(segundo.x)
+primeiro.left_mid = Vector2d(0, segundo.y)
+
+primeiro.y = segundo.y
 primeiro.rotation = 90
-primeiro.mid_right = segundo.mid_left
-print(segundo.left)
-print(segundo.mid_bottom)
+primeiro.center = Vector2d(400, 250)
+segundo.center = Vector2d(100, 300)
+primeiro.right_mid = Vector2d(segundo.x, segundo.y)
+segundo.x = primeiro.x
+primeiro.y = segundo.y
+segundo.x = 400
+segundo.y = 250
 
 
 @window.event
