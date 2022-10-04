@@ -14,7 +14,7 @@ segundo = gameObject = GameObject(
 )
 primeiro.scale = 0.25
 segundo.scale = 0.25
-segundo.mid_bottom = Vector2d(350, 0)
+segundo.bottom_mid = Vector2d(350, 0)
 print(segundo.x)
 primeiro.left_mid = Vector2d(0, segundo.y)
 
@@ -27,12 +27,15 @@ segundo.x = primeiro.x
 primeiro.y = segundo.y
 segundo.x = 400
 segundo.y = 250
-segundo.top_mid = Vector2d(400, 500)
+segundo.bottom_mid = Vector2d(segundo.width // 2, 0)
+primeiro.top_right = Vector2d(800, 500)
+
+print(primeiro.right)
 
 
 @window.event
 def on_draw():
-    segundo.draw()
+    primeiro.draw()
 
 
 pyglet.app.run()

@@ -30,7 +30,7 @@ class Rectangle:
         return copy.copy(self._midtop)
 
     @property
-    def mid_bottom(self):
+    def bottom_mid(self):
         return copy.copy(self._midbottom)
 
     @property
@@ -75,7 +75,7 @@ class Rectangle:
 
     @property
     def bottom(self):
-        return self.mid_bottom.y
+        return self.bottom_mid.y
 
     @property
     def position(self):
@@ -124,42 +124,46 @@ class Rectangle:
             self._center += vector_to_add
             self.__compute_points()
 
-    @mid_bottom.setter
-    def mid_bottom(self, new_mid_bottom: "Vector2d"):
-        if isinstance(new_mid_bottom, Vector2d):
-            vector_to_add = new_mid_bottom.distance_vector(
+    @bottom_mid.setter
+    def bottom_mid(self, new_bottom_mid: "Vector2d"):
+        if isinstance(new_bottom_mid, Vector2d):
+            vector_to_add = new_bottom_mid.distance_vector(
                 self._midbottom
             )
             self._center += vector_to_add
             self.__compute_points()
 
     @top_left.setter
-    def top_left(self, top_left: "Vector2d"):
-        if isinstance(top_left, Vector2d):
-            vector_to_add = top_left.distance_vector(self._topleft)
+    def top_left(self, new_top_left: "Vector2d"):
+        if isinstance(new_top_left, Vector2d):
+            vector_to_add = new_top_left.distance_vector(
+                self._topleft
+            )
             self._center += vector_to_add
             self.__compute_points()
 
     @top_right.setter
-    def top_right(self, top_right: "Vector2d"):
-        if isinstance(top_right, Vector2d):
-            vector_to_add = top_right.distance_vector(self._topright)
+    def top_right(self, new_top_right: "Vector2d"):
+        if isinstance(new_top_right, Vector2d):
+            vector_to_add = new_top_right.distance_vector(
+                self._topright
+            )
             self._center += vector_to_add
             self.__compute_points()
 
     @bottom_left.setter
-    def bottom_left(self, bottom_left: "Vector2d"):
-        if isinstance(bottom_left, Vector2d):
-            vector_to_add = bottom_left.distance_vector(
+    def bottom_left(self, new_bottom_left: "Vector2d"):
+        if isinstance(new_bottom_left, Vector2d):
+            vector_to_add = new_bottom_left.distance_vector(
                 self._bottomleft
             )
             self._center += vector_to_add
             self.__compute_points()
 
     @bottom_right.setter
-    def bottom_right(self, bottom_right: "Vector2d"):
-        if isinstance(bottom_right, Vector2d):
-            vector_to_add = bottom_right.distance_vector(
+    def bottom_right(self, new_bottom_right: "Vector2d"):
+        if isinstance(new_bottom_right, Vector2d):
+            vector_to_add = new_bottom_right.distance_vector(
                 self._bottomright
             )
             self._center += vector_to_add
@@ -193,7 +197,7 @@ class Rectangle:
     @bottom.setter
     def bottom(self, distance: int):
         add_vector = Vector2d(0, distance)
-        self.mid_bottom -= add_vector
+        self.bottom_mid -= add_vector
 
     @rotation.setter
     def rotation(self, angle: int):
@@ -230,7 +234,7 @@ class Rectangle:
     def __compute_auxiliar_points(self):
         half_width = self.__width / 2
         self._topright = Vector2d(
-            self._midtop.x + half_width, self._midtop.y
+            self.top_mid.x + half_width, self.top_mid.y
         )
         self._topleft = Vector2d(
             self._midtop.x - half_width, self._midtop.y
