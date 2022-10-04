@@ -28,7 +28,7 @@ primeiro.y = segundo.y
 segundo.x = 400
 segundo.y = 250
 segundo.bottom_mid = Vector2d(segundo.width // 2, 0)
-primeiro.top_right = Vector2d(800, 500)
+primeiro.bottom_right = Vector2d(800, 0)
 
 print(primeiro.right)
 

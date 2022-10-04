@@ -213,23 +213,23 @@ class GameObject:
         self.connect_GameObject_with_rectangle()
 
     @top_left.setter
-    def top_left(self, top_left: "Vector2d"):
-        self._rectangle.top_left = top_left
+    def top_left(self, new_top_left: "Vector2d"):
+        self._rectangle.top_left = new_top_left
         self.connect_GameObject_with_rectangle()
 
     @top_right.setter
-    def top_right(self, top_right: "Vector2d"):
-        self._rectangle.top_right = top_right
+    def top_right(self, new_top_right: "Vector2d"):
+        self._rectangle.top_right = new_top_right
         self.connect_GameObject_with_rectangle()
 
     @bottom_left.setter
-    def bottom_left(self, bottom_left: "Vector2d"):
-        self._rectangle.bottom_left = bottom_left
+    def bottom_left(self, new_bottom_left: "Vector2d"):
+        self._rectangle.bottom_left = new_bottom_left
         self.connect_GameObject_with_rectangle()
 
     @bottom_right.setter
-    def bottom_right(self, bottom_right: "Vector2d"):
-        self._rectangle.bottom_right = bottom_right
+    def bottom_right(self, new_bottom_right: "Vector2d"):
+        self._rectangle.bottom_right = new_bottom_right
         self.connect_GameObject_with_rectangle()
 
     @x.setter
