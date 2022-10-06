@@ -46,7 +46,11 @@ class Rectangle:
     """
 
     def __init__(
-        self, middle_point: "Vector2d", width, height, rotation=0
+        self,
+        middle_point: "Vector2d",
+        width: int | float,
+        height: int | float,
+        rotation=0,
     ):
         """
         Construtor da classe.
@@ -66,6 +70,7 @@ class Rectangle:
         self._height = height
         self._center = middle_point
         self.rotation = rotation
+        self.__compute_mid_points()
 
     @property
     def center(self) -> "Vector2d":
@@ -177,63 +182,63 @@ class Rectangle:
         return self._rotation
 
     @property
-    def x(self) -> int:
+    def x(self) -> int | float:
         """
         Getter para a abscissa da posição do retângulo.
 
         :return: Abcissa da posição.
-        :rtype: int
+        :rtype: int | float
         """
         return self._center.x
 
     @property
-    def y(self) -> int:
+    def y(self) -> int | float:
         """
         Getter para a ordenada da posição do retângulo.
 
 
         :return: Ordenada da posição do retângulo.
-        :rtype: int
+        :rtype: int |float
         """
         return self._center.y
 
     @property
-    def left(self) -> int:
+    def left(self) -> int | float:
         """
         Getter para o x do lado esquerdo do retângulo.
 
         :return: X do lado esquerdo do retângulo.
-        :rtype: int
+        :rtype: int | float
         """
         return self.left_mid.x
 
     @property
-    def right(self) -> int:
+    def right(self) -> int | float:
         """
         Getter para o x do lado direito do retângulo.
 
         :return: X do lado direito do retângulo.
-        :rtype: int
+        :rtype: int | float
         """
         return self.right_mid.x
 
     @property
-    def top(self) -> int:
+    def top(self) -> int | float:
         """
         Getter para o y do lado superior do retângulo.
 
         :return: y do lado superior do retângulo.
-        :rtype: int
+        :rtype: int | float
         """
         return self.top_mid.y
 
     @property
-    def bottom(self) -> int:
+    def bottom(self) -> int | float:
         """
         Getter para o y do lado inferior do retângulo.
 
         :return: y do lado inferior do retângulo.
-        :rtype: int
+        :rtype: int |float
         """
         return self.bottom_mid.y
 
@@ -459,7 +464,7 @@ class Rectangle:
         :type distance: int
         """
         add_vector = Vector2d(distance, 0)
-        self._left_mid -= add_vector
+        self.left_mid -= add_vector
 
     @right.setter
     def right(self, distance: int):
@@ -473,7 +478,7 @@ class Rectangle:
         :type distance: int
         """
         add_vector = Vector2d(distance, 0)
-        self._right_mid += add_vector
+        self.right_mid += add_vector
 
     @top.setter
     def top(self, distance: int):
@@ -487,7 +492,7 @@ class Rectangle:
         :type distance: int
         """
         add_vector = Vector2d(0, distance)
-        self._top_mid += add_vector
+        self.top_mid += add_vector
 
     @bottom.setter
     def bottom(self, distance: int):
@@ -550,8 +555,8 @@ class Rectangle:
         Calcula os pontos médios dos lados.
 
         """
-        half_width: int = self.__width / 2
-        half_height: int = self.__height / 2
+        half_width: float = self.__width / 2
+        half_height: float = self.__height / 2
         self._midleft = Vector2d(self.x - half_width, self.y)
         self._mid_right = Vector2d(self.x + half_width, self.y)
         self._midtop = Vector2d(self.x, self.y + half_height)
@@ -586,8 +591,8 @@ class Rectangle:
         :type vector: "Vector2d"
         """
         return (
-            self.x >= self.left
-            and self.y <= self.right
-            and self.y >= self.bottom
-            and self.y <= self.top
+            vector.x >= self.left
+            and vector.x <= self.right
+            and vector.y >= self.bottom
+            and vector.y <= self.top
         )

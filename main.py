@@ -19,7 +19,6 @@ print(segundo.x)
 primeiro.left_mid = Vector2d(0, segundo.y)
 
 primeiro.y = segundo.y
-primeiro.rotation = 90
 primeiro.center = Vector2d(400, 250)
 segundo.center = Vector2d(100, 300)
 primeiro.right_mid = Vector2d(segundo.x, segundo.y)
@@ -31,6 +30,14 @@ segundo.bottom_mid = Vector2d(segundo.width // 2, 0)
 primeiro.bottom_right = Vector2d(800, 0)
 
 print(primeiro.right)
+primeiro.left = 800 - primeiro.width
+primeiro.right = 800 - primeiro.width
+
+
+@window.event
+def on_mouse_press(x, y, button, modifiers):
+    primeiro.on_mouse_press(x, y, button, modifiers)
+    segundo.on_mouse_press(x, y, button, modifiers)
 
 
 @window.event

@@ -1,4 +1,5 @@
 import pyglet
+from pyglet.window import mouse
 
 from Rectangle import Rectangle
 from Vector2d import Vector2d
@@ -652,3 +653,9 @@ class GameObject:
         self._rectangle.rotation = angle
         self.connect_GameObject_with_rectangle()
         self._sprite.rotation = angle
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if button == mouse.LEFT:
+            mouse_position = Vector2d(x, y)
+            if self.is_interior_point(mouse_position):
+                print("Was clicked")
