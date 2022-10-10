@@ -17,15 +17,15 @@ print(primeiro.right)
 
 text = Text("teste", Vector2d(window.width / 2, window.height / 2))
 
-
+segundo.scale = 0.5
 @window.event
 def on_mouse_press(x, y, button, modifiers):
     text.on_mouse_press(x, y, button, modifiers)
 
+    segundo.on_mouse_press(x, y, button, modifiers)
 
 @window.event
 def on_draw():
-    text.draw()
-
+    segundo.draw()
 
 pyglet.app.run()
