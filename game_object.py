@@ -486,6 +486,28 @@ class GameObject:
         """
         self._rectangle.right_mid = new_right_mid
         self.connect_GameObject_with_rectangle()
+    @property
+    def biggest_size(self):
+        if(self.width > self.height):
+            return self.width;
+        if(self.height > self.width):
+            return self.height
+    @property
+    def quarter_right_top(self):
+        vector = Vector2d(self.right_mid.x,self.right_mid.y + self.biggest_size /4)
+        return vector
+    @property
+    def quarter_right_bottom(self):
+        vector = Vector2d(self.right_mid.x,self.right_mid.y - self.biggest_size /4)
+        return vector
+    @property
+    def quarter_left_top(self):
+        vector = Vector2d(self.left_mid.x,self.left_mid.y + self.biggest_size /4)
+        return vector
+    @property
+    def quarter_left_bottom(self):
+        vector = Vector2d(self.left_mid.x,self.left_mid.y - self.biggest_size /4)
+        return vector
 
     @top_mid.setter
     def top_mid(self, new_top_mid: "Vector2d"):
@@ -659,6 +681,7 @@ class GameObject:
         Método para determinar o comportamento do clique.
 
         """
+        print("clicou")
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:
