@@ -1,34 +1,21 @@
 import pyglet
 
 from game_object import GameObject
-from Text import Text
 from Vector2d import Vector2d
+from window import Window
 
-window = pyglet.window.Window(800, 500)
+primeiro = gameObject = GameObject(Vector2d(400, 300), "domino.jpg")
 
-primeiro = gameObject = GameObject(
-    Vector2d(window.width / 2, window.height / 2), "domino.jpg"
-)
+segundo = gameObject = GameObject(Vector2d(400, 300), "domino.jpg")
 
-segundo = gameObject = GameObject(
-    Vector2d(window.width / 2, window.height / 2), "domino.jpg"
-)
-print(primeiro.right)
-
-text = Text("teste", Vector2d(window.width / 2, window.height / 2))
 
 segundo.scale = 0.25
 primeiro.scale = 0.25
-segundo.rotation = 90 
-primeiro.bottom_mid 
-@window.event
-def on_mouse_press(x, y, button, modifiers):
-    text.on_mouse_press(x, y, button, modifiers)
-
-    segundo.on_mouse_press(x, y, button, modifiers)
-
-@window.event
-def on_draw():
-    segundo.draw()
-    primeiro.draw()
-pyglet.app.run()
+segundo.rotation = 90
+segundo.right_mid = primeiro.left_mid
+game_objects = [primeiro, segundo]
+if __name__ == "__main__":
+    window = Window(
+        game_objects, width=800, height=600, title="Hello World"
+    )
+    pyglet.app.run()
