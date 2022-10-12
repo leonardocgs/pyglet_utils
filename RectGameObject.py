@@ -5,7 +5,7 @@ from Rectangle import Rectangle
 from Vector2d import Vector2d
 
 
-class GameObject:
+class RectGameObject:
     """
     Classe para ser utilizada para manipular sprite do pyglet.
     Seus pontos são represantados pela classe Vector2d,
@@ -50,9 +50,11 @@ class GameObject:
     def __init__(
         self,
         position: "Vector2d",
-        img_path: str,
-        batch=None,
+        width,
+        height,
+        color=(255, 255, 255),
         rotation=0,
+        batch=None,
     ):
         """
         Construtor do GameObject
@@ -67,11 +69,19 @@ class GameObject:
         :param rotation: Ângulo de rotação do triângulo no sentido horário.
         :type rotation: int, optional
         """
-        self._image = pyglet.resource.image(img_path)
-        self._image.anchor_x = self._image.width // 2
-        self._image.anchor_y = self._image.height // 2
-        self._width = self._image.width
-        self._height = self._image.height
+        self._position = position
+        self._rectangle_shape = pyglet.shapes.Rectangle(
+            position.x,
+            position.y,
+            width,
+            height,
+            color=color,
+            batch=batch,
+        )
+        self._rectangle_shape.anchor_x = width / 2
+        self._rectangle_shape.anchor_y = height / 2
+        self._width = width
+        self._height = height
         self._rotation = rotation
         self._position = position
         self._rectangle = Rectangle(
@@ -79,12 +89,6 @@ class GameObject:
             self._width,
             self._height,
             self._rotation,
-        )
-        self._sprite = pyglet.sprite.Sprite(
-            self._image,
-            x=self._rectangle.x,
-            y=self._rectangle.y,
-            batch=batch,
         )
 
     def connect_GameObject_with_rectangle(self):
@@ -94,8 +98,8 @@ class GameObject:
         das duas classes.
 
         """
-        self._sprite.x = self._rectangle.x
-        self._sprite.y = self._rectangle.y
+        self._rectangle_shape.x = self._rectangle.x
+        self._rectangle_shape.y = self._rectangle.y
 
     @property
     def center(self):
@@ -113,14 +117,14 @@ class GameObject:
         Reescreve o método draw do pyglet.sprite.Sprite.
 
         """
-        self._sprite.draw()
+        self._rectangle_shape.draw()
 
     def delete(self):
         """
         Método para deletar o GameObject.
 
         """
-        self._sprite.delete()
+        self._rectangle_shape.delete()
 
     def is_interior_point(self, vector: "Vector2d"):
         """
@@ -280,15 +284,10 @@ class GameObject:
         :return: Posição do GameObject
         :rtype: "Vector2d"
         """
-        return self._position
-
-    @property
-    def scale(self):
-        """
-        Getter para o valor de escala do sprite.
-
-        """
-        return self._sprite.scale
+        return (
+            self._position.x,
+            self._position.y,
+        )
 
     @property
     def x(self):
@@ -298,7 +297,7 @@ class GameObject:
         :return: Abcissa da posição.
         :rtype: int
         """
-        return self._sprite.x
+        return self._rectangle_shape.x
 
     @property
     def width(self):
@@ -329,7 +328,7 @@ class GameObject:
         :return: Ordenada da posição do GameObject.
         :rtype: int
         """
-        return self._sprite.y
+        return self._rectangle_shape.y
 
     @position.setter
     def position(self, vector_position: "Vector2d"):
@@ -419,21 +418,6 @@ class GameObject:
         """
         self._rectangle.top_left = top_left
 
-    @scale.setter
-    def scale(self, size):
-        """
-        Setter para a proporção do tamanho do sprite
-        do GameObject.
-
-        :param size: Proporção do tamanho do sprite.
-        :type size: [TODO:type]
-        """
-
-        self._sprite.scale = size
-        self._rectangle.height = self._sprite.height
-        self._rectangle.width = self._sprite.width
-        self.connect_GameObject_with_rectangle()
-
     @position.setter
     def position(self, vector_position: "Vector2d"):
         """
@@ -490,34 +474,6 @@ class GameObject:
             return self.width
         if self.height > self.width:
             return self.height
-
-    @property
-    def quarter_right_top(self):
-        vector = Vector2d(
-            self.right_mid.x, self.right_mid.y + self.biggest_size / 4
-        )
-        return vector
-
-    @property
-    def quarter_right_bottom(self):
-        vector = Vector2d(
-            self.right_mid.x, self.right_mid.y - self.biggest_size / 4
-        )
-        return vector
-
-    @property
-    def quarter_left_top(self):
-        vector = Vector2d(
-            self.left_mid.x, self.left_mid.y + self.biggest_size / 4
-        )
-        return vector
-
-    @property
-    def quarter_left_bottom(self):
-        vector = Vector2d(
-            self.left_mid.x, self.left_mid.y - self.biggest_size / 4
-        )
-        return vector
 
     @top_mid.setter
     def top_mid(self, new_top_mid: "Vector2d"):
@@ -684,7 +640,7 @@ class GameObject:
         """
         self._rectangle.rotation = angle
         self.connect_GameObject_with_rectangle()
-        self._sprite.rotation = angle
+        self._rectangle_shape.rotation = angle
 
     def on_click(self):
         """
