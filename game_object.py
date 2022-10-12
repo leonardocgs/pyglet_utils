@@ -98,6 +98,10 @@ class GameObject:
         self._sprite.y = self._rectangle.y
 
     @property
+    def batch(self):
+        return self._sprite.batch
+
+    @property
     def center(self):
         """
         Getter para o centro do GameObject
@@ -342,6 +346,10 @@ class GameObject:
         """
         self._rectangle.position = vector_position
         self.connect_GameObject_with_rectangle()
+
+    @batch.setter
+    def batch(self, batch: "pyglet.graphics.Batch"):
+        self._sprite.batch = batch
 
     @center.setter
     def center(self, new_center: "Vector2d"):

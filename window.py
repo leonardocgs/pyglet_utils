@@ -1,5 +1,6 @@
 import pyglet
 
+from game_object import GameObject
 from Rectangle import Rectangle
 from Vector2d import Vector2d
 
@@ -7,7 +8,8 @@ from Vector2d import Vector2d
 class Window(pyglet.window.Window):
     def __init__(
         self,
-        gameResources,
+        gameBatches: list[pyglet.graphics.Batch],
+        gameResources: list[GameObject],
         width=None,
         height=None,
         title=None,
@@ -16,6 +18,7 @@ class Window(pyglet.window.Window):
     ):
         super().__init__(width, height, title, resizable, fullscreen)
         self.gameResources = gameResources
+        self.gameBatches = gameBatches
 
     @property
     def rect(self):
@@ -47,5 +50,5 @@ class Window(pyglet.window.Window):
 
     def on_draw(self):
         self.clear()
-        for gameResource in self.gameResources:
-            gameResource.draw()
+        for gameBatch in self.gameBatches:
+            gameBatch.draw()
