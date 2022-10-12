@@ -27,3 +27,4 @@ class Player:
             else:
                 tile.left_mid = self.hand[index - 1].right_mid
                 tile.left = -gap
+            tile.is_in_hand = True
