@@ -117,6 +117,7 @@ class GameObject:
         Reescreve o método draw do pyglet.sprite.Sprite.
 
         """
+        print("Desenhou")
         self._sprite.draw()
 
     def delete(self):
@@ -699,7 +700,7 @@ class GameObject:
         Método para determinar o comportamento do clique.
 
         """
-        print("clicou")
+        self.delete()
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:
