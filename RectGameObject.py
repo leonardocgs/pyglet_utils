@@ -55,6 +55,7 @@ class RectGameObject:
         color=(255, 255, 255),
         rotation=0,
         batch=None,
+        opacity=255,
     ):
         """
         Construtor do GameObject
@@ -90,6 +91,7 @@ class RectGameObject:
             self._height,
             self._rotation,
         )
+        self.opacity = opacity
 
     def connect_GameObject_with_rectangle(self):
         """
@@ -100,6 +102,10 @@ class RectGameObject:
         """
         self._rectangle_shape.x = self._rectangle.x
         self._rectangle_shape.y = self._rectangle.y
+
+    @property
+    def opacity(self):
+        return self._rectangle_shape.opacity
 
     @property
     def center(self):
@@ -641,6 +647,10 @@ class RectGameObject:
         self._rectangle.rotation = angle
         self.connect_GameObject_with_rectangle()
         self._rectangle_shape.rotation = angle
+
+    @opacity.setter
+    def opacity(self, opacity):
+        self._rectangle_shape.opacity = opacity
 
     def on_click(self):
         """

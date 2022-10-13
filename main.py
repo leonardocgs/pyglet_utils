@@ -1,5 +1,6 @@
 import pyglet
 
+from game import Game
 from game_object import GameObject
 from player import Player
 from RectGameObject import RectGameObject
@@ -7,21 +8,15 @@ from tile import Tile
 from Vector2d import Vector2d
 from window import Window
 
-tile2 = Tile(Vector2d(0, 100), 4, 4)
-tile3 = Tile(Vector2d(0, 100), 5, 5)
-tile4 = Tile(Vector2d(0, 100), 0, 5)
-tile5 = Tile(Vector2d(0, 100), 0, 6)
-tile6 = Tile(Vector2d(0, 100), 2, 6)
-tile7 = Tile(Vector2d(0, 100), 3, 6)
-lista = [tile2, tile3, tile4, tile5, tile6, tile7]
-
 if __name__ == "__main__":
-    player = Player(lista, 2000)
+    game = Game(800)
+    game.start_game()
     window = Window(
-        [player.hand_batch],
-        lista,
-        width=2000,
-        height=2000,
+        gameBatches=game.batches,
+        gameResources=game.game_tiles,
+        width=800,
+        height=800,
         title="Hello World",
     )
+    window.game_agents.append(game)
     pyglet.app.run()

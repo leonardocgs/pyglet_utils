@@ -8,8 +8,8 @@ from Vector2d import Vector2d
 class Window(pyglet.window.Window):
     def __init__(
         self,
-        gameBatches: list[pyglet.graphics.Batch],
-        gameResources: list[GameObject],
+        gameBatches: list[pyglet.graphics.Batch] = [],
+        gameResources: list[GameObject] = [],
         width=None,
         height=None,
         title=None,
@@ -17,8 +17,10 @@ class Window(pyglet.window.Window):
         fullscreen=False,
     ):
         super().__init__(width, height, title, resizable, fullscreen)
+        print(gameBatches)
         self.gameResources = gameResources
         self.gameBatches = gameBatches
+        self.game_agents = []
 
     @property
     def rect(self):
@@ -44,11 +46,22 @@ class Window(pyglet.window.Window):
     def right(self):
         return self.rect.right
 
+    def update(self):
+
+        for game_agent in self.game_agents:
+            game_agent.update()
+
     def on_mouse_press(self, x, y, button, modifiers):
         for gameResource in self.gameResources:
             gameResource.on_mouse_press(x, y, button, modifiers)
 
+    def on_mouse_release(self, x, y, button, modifiers):
+        for gameResource in self.gameResources:
+            gameResource.on_mouse_release(x, y, button, modifiers)
+
     def on_draw(self):
+
+        self.update()
         self.clear()
         for gameBatch in self.gameBatches:
             gameBatch.draw()

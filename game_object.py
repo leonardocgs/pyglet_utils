@@ -117,7 +117,6 @@ class GameObject:
         Reescreve o método draw do pyglet.sprite.Sprite.
 
         """
-        print("Desenhou")
         self._sprite.draw()
 
     def delete(self):
@@ -700,10 +699,18 @@ class GameObject:
         Método para determinar o comportamento do clique.
 
         """
-        self.delete()
+
+    def on_unclick(self):
+        pass
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:
             mouse_position = Vector2d(x, y)
             if self.is_interior_point(mouse_position):
                 self.on_click()
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        if button == mouse.LEFT:
+            mouse_position = Vector2d(x, y)
+            if self.is_interior_point(mouse_position):
+                self.on_unclick()

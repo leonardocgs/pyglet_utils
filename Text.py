@@ -608,7 +608,6 @@ class Text:
         Método para determinar o comportamento do clique.
 
         """
-        print("teste")
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:
