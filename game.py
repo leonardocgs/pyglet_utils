@@ -11,9 +11,9 @@ from Vector2d import Vector2d
 
 class Game:
     def __init__(self, window_width):
-        self.game_tiles = []
-        self.not_taken_tiles = []
-        self.board_tiles = []
+        self.game_tiles: list[Tile] = []
+        self.not_taken_tiles: list[Tile] = []
+        self.board_tiles: list[Tile] = []
         self.player = Player()
         self.game_batch = pyglet.graphics.Batch()
         self.layer_batch = pyglet.graphics.Batch()
@@ -22,9 +22,7 @@ class Game:
     def create_tiles(self):
         for first_number in range(0, 7):
             for second_number in range(first_number, 7):
-                new_tile = Tile(
-                    Vector2d(0, 100), first_number, second_number
-                )
+                new_tile = Tile(Vector2d(0, 100), first_number, second_number)
                 new_tile.left_mid = Vector2d(0, 100)
                 new_tile.layer_batch = self.layer_batch
                 self.game_tiles.append(new_tile)
@@ -60,22 +58,25 @@ class Game:
 
     def player_move(self):
         if self.is_hand_tile_selected and self.is_board_tile_selected:
-            select_hand_tile = self.selected_hand_tile
-            selected_board_tile = self.selected_board_tile
-            if (
-                select_hand_tile.first_value
-                in selected_board_tile.values
-                or select_hand_tile.second_value
-                in selected_board_tile.values
-            ):
+            select_hand_tile: "Tile" = self.selected_hand_tile
+            selected_board_tile: "Tile" = self.selected_board_tile
+            delete_item = None
+            for values in selected_board_tile.not_taken_values:
+                if (
+                    select_hand_tile.first_value == values.value
+                    or select_hand_tile.second_value == values.value
+                ):
+                    delete_item = values
+                    select_hand_tile.change_hand_tile_property_after_move(
+                        delete_item, selected_board_tile
+                    )
 
-                select_hand_tile.bottom_mid = (
-                    selected_board_tile.top_mid
-                )
-                select_hand_tile.on_unclick()
-                self.player.hand.remove(select_hand_tile)
-                select_hand_tile.game_status = TileGameStatus.TABLE
-                self.board_tiles.append(select_hand_tile)
+                    selected_board_tile.change_board_tile_property_after_move(
+                        delete_item
+                    )
+                    self.player.hand.remove(select_hand_tile)
+                    self.board_tiles.append(select_hand_tile)
+                    break
 
     def give_a_player_random_tiles(self):
         random_numbers = random.sample(range(0, 28), 7)
@@ -89,12 +90,10 @@ class Game:
 
     def set_random_start_tile(self):
 
-        random_number = random.randint(
-            0, len(self.not_taken_tiles) - 1
-        )
+        random_number = random.randint(0, len(self.not_taken_tiles) - 1)
         start_tile = self.not_taken_tiles[random_number]
-        start_tile.x = 400
-        start_tile.y = 400
+        start_tile.x = 750
+        start_tile.y = 750
         start_tile.batch = self.game_batch
         start_tile.game_status = TileGameStatus.TABLE
         self.board_tiles.append(start_tile)

@@ -9,13 +9,13 @@ from Vector2d import Vector2d
 from window import Window
 
 if __name__ == "__main__":
-    game = Game(800)
+    game = Game(1500)
     game.start_game()
     window = Window(
         gameBatches=game.batches,
         gameResources=game.game_tiles,
-        width=800,
-        height=800,
+        width=1500,
+        height=1500,
         title="Hello World",
     )
     pyglet.clock.schedule(game.update, 1 / 120)

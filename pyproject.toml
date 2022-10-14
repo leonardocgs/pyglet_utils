@@ -1,2 +1,2 @@
 [tool.black]
-line-length = 70
+line-length = 80
