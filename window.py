@@ -46,11 +46,6 @@ class Window(pyglet.window.Window):
     def right(self):
         return self.rect.right
 
-    def update(self):
-
-        for game_agent in self.game_agents:
-            game_agent.update()
-
     def on_mouse_press(self, x, y, button, modifiers):
         for gameResource in self.gameResources:
             gameResource.on_mouse_press(x, y, button, modifiers)
@@ -61,7 +56,6 @@ class Window(pyglet.window.Window):
 
     def on_draw(self):
 
-        self.update()
         self.clear()
         for gameBatch in self.gameBatches:
             gameBatch.draw()

@@ -18,5 +18,5 @@ if __name__ == "__main__":
         height=800,
         title="Hello World",
     )
-    window.game_agents.append(game)
+    pyglet.clock.schedule(game.update, 1 / 120)
     pyglet.app.run()
