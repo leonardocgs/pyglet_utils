@@ -1,22 +1,22 @@
 import pyglet
 
 from game import Game
-from game_object import GameObject
-from player import Player
-from RectGameObject import RectGameObject
-from tile import Tile
-from Vector2d import Vector2d
 from window import Window
 
 if __name__ == "__main__":
-    game = Game(1500)
-    game.start_game()
+    game_batch = pyglet.graphics.Batch()
+    layer_batch = pyglet.graphics.Batch()
+    batches = [game_batch, layer_batch]
+    game = Game(game_batch, layer_batch)
+
     window = Window(
-        gameBatches=game.batches,
+        gameBatches=batches,
         gameResources=game.game_tiles,
         width=1500,
         height=1500,
         title="Hello World",
     )
+    game.window_measurements = window.measurements
+    game.start_game()
     pyglet.clock.schedule(game.update, 1 / 120)
     pyglet.app.run()

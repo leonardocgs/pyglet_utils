@@ -10,14 +10,19 @@ from Vector2d import Vector2d
 
 
 class Game:
-    def __init__(self, window_width):
+    def __init__(
+        self,
+        game_batch,
+        layer_batch,
+        window_measurements=None,
+    ):
         self.game_tiles: list[Tile] = []
         self.not_taken_tiles: list[Tile] = []
         self.board_tiles: list[Tile] = []
         self.player = Player()
-        self.game_batch = pyglet.graphics.Batch()
-        self.layer_batch = pyglet.graphics.Batch()
-        self._window_width = window_width
+        self.window_measurements = window_measurements
+        self.game_batch = game_batch
+        self.layer_batch = layer_batch
 
     def create_tiles(self):
         for first_number in range(0, 7):
@@ -68,7 +73,10 @@ class Game:
                 ):
                     delete_item = values
                     select_hand_tile.change_hand_tile_property_after_move(
-                        delete_item, selected_board_tile
+                        delete_item,
+                        selected_board_tile,
+                        self.window_measurements,
+                        self.board_tiles,
                     )
 
                     selected_board_tile.change_board_tile_property_after_move(
@@ -76,6 +84,8 @@ class Game:
                     )
                     self.player.hand.remove(select_hand_tile)
                     self.board_tiles.append(select_hand_tile)
+                    print(select_hand_tile.position)
+
                     break
 
     def give_a_player_random_tiles(self):
@@ -92,8 +102,8 @@ class Game:
 
         random_number = random.randint(0, len(self.not_taken_tiles) - 1)
         start_tile = self.not_taken_tiles[random_number]
-        start_tile.x = 750
-        start_tile.y = 750
+        start_tile.x = self.window_measurements["width"] / 2
+        start_tile.y = self.window_measurements["height"] / 2
         start_tile.batch = self.game_batch
         start_tile.game_status = TileGameStatus.TABLE
         self.board_tiles.append(start_tile)
@@ -102,15 +112,17 @@ class Game:
     def start_game(self):
         self.create_tiles()
         self.give_a_player_random_tiles()
-        self.set_random_start_tile()
         self.hand_position(10)
+        self.set_random_start_tile()
 
     def hand_position(self, gap):
         tile_width = self.player.hand[0].width
         total_width = tile_width * len(self.player.hand)
         gap_total = len(self.player.hand) - 1
         surround_width = (
-            self._window_width - total_width - (gap_total * gap)
+            self.window_measurements["width"]
+            - total_width
+            - (gap_total * gap)
         ) / 2
         for index, tile in enumerate(self.player.hand):
             if index == 0:

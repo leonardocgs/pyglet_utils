@@ -76,11 +76,8 @@ class Text:
         )
         self._width = self._label.content_width
         self._height = self._label.content_height
-        print(self._height, self._width)
         self._position = position
-        self._rectangle = Rectangle(
-            position, self._width, self._height
-        )
+        self._rectangle = Rectangle(position, self._width, self._height)
 
     def connect_Text_with_rectangle(self):
         """

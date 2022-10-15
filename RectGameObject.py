@@ -657,7 +657,6 @@ class RectGameObject:
         Método para determinar o comportamento do clique.
 
         """
-        print("clicou")
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:

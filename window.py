@@ -17,7 +17,6 @@ class Window(pyglet.window.Window):
         fullscreen=False,
     ):
         super().__init__(width, height, title, resizable, fullscreen)
-        print(gameBatches)
         self.gameResources = gameResources
         self.gameBatches = gameBatches
         self.game_agents = []
@@ -37,6 +36,17 @@ class Window(pyglet.window.Window):
     @property
     def bottom(self):
         return self.rect.bottom
+
+    @property
+    def measurements(self):
+        return {
+            "width": self.width,
+            "height": self.height,
+            "top": self.top,
+            "right": self.right,
+            "bottom": self.bottom,
+            "left": self.left,
+        }
 
     @property
     def left(self):

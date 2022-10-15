@@ -4,7 +4,6 @@ from enum import Enum
 class TileValuePosition(Enum):
     TOP = "top"
     BOTTOM = "bottom"
-
     LEFT = "left"
     RIGHT = "right"
 

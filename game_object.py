@@ -97,6 +97,42 @@ class GameObject:
         self._sprite.x = self._rectangle.x
         self._sprite.y = self._rectangle.y
 
+    def checks_if_another_object_colides(self, rect_to_check):
+        """
+        Verifica se o GameObject colide com outro GameObject ou retângulo.
+
+        :param other: Outro GameObject
+        :type other: GameObject
+        """
+        if (
+            self.is_not_poligonal_point(rect_to_check.top_left)
+            or self.is_not_poligonal_point(rect_to_check.top_right)
+            or self.is_not_poligonal_point(rect_to_check.bottom_left)
+            or self.is_not_poligonal_point(rect_to_check.bottom_right)
+            or (self.x == rect_to_check.x and self.y == rect_to_check.y)
+        ):
+            return True
+
+        return False
+
+    def __eq__(self, other):
+        """
+        Sobrecarga do operador de igualdade.
+
+        :param other: Outro GameObject
+        :type other: GameObject
+        """
+        return self.x == other.x and self.y == other.y
+
+    def is_not_poligonal_point(self, Vector2d: "Vector2d"):
+        """
+        Verifica se o ponto não é um dos vértices do GameObject.
+
+        :param Vector2d: Vetor que representa o ponto para checar.
+        :type Vector2d: "Vector2d"
+        """
+        return self._rectangle.is_not_poligonal_point(Vector2d)
+
     @property
     def batch(self):
         return self._sprite.batch
@@ -168,6 +204,158 @@ class GameObject:
         :rtype: "Vector2d"
         """
         return self._rectangle.top_mid
+
+    @property
+    def right_top_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado direito do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado direito do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.right_top_quarter
+
+    @right_top_quarter.setter
+    def right_top_quarter(self, new_top_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado direito do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado direito do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.right_top_quarter = new_top_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def right_bottom_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado direito do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado direito do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.right_bottom_quarter
+
+    @right_bottom_quarter.setter
+    def right_bottom_quarter(self, new_bottom_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado direito do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado direito do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.right_bottom_quarter = new_bottom_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def left_top_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.left_top_quarter
+
+    @left_top_quarter.setter
+    def left_top_quarter(self, new_top_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.left_top_quarter = new_top_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def left_bottom_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.left_bottom_quarter
+
+    @left_bottom_quarter.setter
+    def left_bottom_quarter(self, new_bottom_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado esquerdo do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.left_bottom_quarter = new_bottom_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def top_left_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado superior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado superior do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.top_left_quarter
+
+    @top_left_quarter.setter
+    def top_left_quarter(self, new_top_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado superior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior esquerdo e o ponto médio do lado superior do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.top_left_quarter = new_top_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def top_right_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado superior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado superior do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.top_right_quarter
+
+    @top_right_quarter.setter
+    def top_right_quarter(self, new_top_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado superior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice superior direito e o ponto médio do lado superior do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.top_right_quarter = new_top_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def bottom_left_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado inferior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado inferior do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.bottom_left_quarter
+
+    @bottom_left_quarter.setter
+    def bottom_left_quarter(self, new_bottom_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado inferior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior esquerdo e o ponto médio do lado inferior do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.bottom_left_quarter = new_bottom_quarter
+        self.connect_GameObject_with_rectangle()
+
+    @property
+    def bottom_right_quarter(self):
+        """
+        Getter para o ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado inferior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado inferior do GameObject.
+        rtype: "Vector2d"
+        """
+        return self._rectangle.bottom_right_quarter
+
+    @bottom_right_quarter.setter
+    def bottom_right_quarter(self, new_bottom_quarter):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado inferior do GameObject.
+        return: Ponto médio do segmento formado pelo vertice inferior direito e o ponto médio do lado inferior do GameObject.
+        rtype: "Vector2d"
+        """
+        self._rectangle.bottom_right_quarter = new_bottom_quarter
+        self.connect_GameObject_with_rectangle()
 
     @property
     def bottom_mid(self):
@@ -284,7 +472,7 @@ class GameObject:
         :return: Posição do GameObject
         :rtype: "Vector2d"
         """
-        return self._position
+        return self._rectangle.position
 
     @property
     def scale(self):
@@ -498,34 +686,6 @@ class GameObject:
             return self.width
         if self.height > self.width:
             return self.height
-
-    @property
-    def quarter_right_top(self):
-        vector = Vector2d(
-            self.right_mid.x, self.right_mid.y + self.biggest_size / 4
-        )
-        return vector
-
-    @property
-    def quarter_right_bottom(self):
-        vector = Vector2d(
-            self.right_mid.x, self.right_mid.y - self.biggest_size / 4
-        )
-        return vector
-
-    @property
-    def quarter_left_top(self):
-        vector = Vector2d(
-            self.left_mid.x, self.left_mid.y + self.biggest_size / 4
-        )
-        return vector
-
-    @property
-    def quarter_left_bottom(self):
-        vector = Vector2d(
-            self.left_mid.x, self.left_mid.y - self.biggest_size / 4
-        )
-        return vector
 
     @top_mid.setter
     def top_mid(self, new_top_mid: "Vector2d"):

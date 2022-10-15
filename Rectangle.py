@@ -310,9 +310,7 @@ class Rectangle:
         :type new_left_mid: "Vector2d"
         """
         if isinstance(new_left_mid, Vector2d):
-            vector_to_add = new_left_mid.distance_vector(
-                self._midleft
-            )
+            vector_to_add = new_left_mid.distance_vector(self._midleft)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -327,9 +325,7 @@ class Rectangle:
         :type new_right_mid: "Vector2d"
         """
         if isinstance(new_right_mid, Vector2d):
-            vector_to_add = new_right_mid.distance_vector(
-                self._mid_right
-            )
+            vector_to_add = new_right_mid.distance_vector(self._mid_right)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -359,9 +355,7 @@ class Rectangle:
         :type new_bottom_mid: "Vector2d"
         """
         if isinstance(new_bottom_mid, Vector2d):
-            vector_to_add = new_bottom_mid.distance_vector(
-                self._midbottom
-            )
+            vector_to_add = new_bottom_mid.distance_vector(self._midbottom)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -376,9 +370,7 @@ class Rectangle:
         :type new_top_left: "Vector2d"
         """
         if isinstance(new_top_left, Vector2d):
-            vector_to_add = new_top_left.distance_vector(
-                self._topleft
-            )
+            vector_to_add = new_top_left.distance_vector(self._topleft)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -392,9 +384,7 @@ class Rectangle:
         :type new_top_right: "Vector2d"
         """
         if isinstance(new_top_right, Vector2d):
-            vector_to_add = new_top_right.distance_vector(
-                self._topright
-            )
+            vector_to_add = new_top_right.distance_vector(self._topright)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -408,9 +398,7 @@ class Rectangle:
         :type new_bottom_left: "Vector2d"
         """
         if isinstance(new_bottom_left, Vector2d):
-            vector_to_add = new_bottom_left.distance_vector(
-                self._bottomleft
-            )
+            vector_to_add = new_bottom_left.distance_vector(self._bottomleft)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -562,6 +550,7 @@ class Rectangle:
         self._midtop = Vector2d(self.x, self.y + half_height)
         self._midbottom = Vector2d(self.x, self.y - half_height)
         self.__compute_vertices()
+        self.__compute_auxiliar_vertices()
 
     def __compute_vertices(self):
         """
@@ -569,18 +558,267 @@ class Rectangle:
 
         """
         half_width = self.__width / 2
-        self._topright = Vector2d(
-            self.top_mid.x + half_width, self.top_mid.y
-        )
-        self._topleft = Vector2d(
-            self._midtop.x - half_width, self._midtop.y
-        )
+        self._topright = Vector2d(self.top_mid.x + half_width, self.top_mid.y)
+        self._topleft = Vector2d(self._midtop.x - half_width, self._midtop.y)
         self._bottomright = Vector2d(
             self._midbottom.x + half_width, self._midbottom.y
         )
         self._bottomleft = Vector2d(
             self._midbottom.x - half_width, self._midbottom.y
         )
+
+    def __compute_auxiliar_vertices(self):
+        quarter_width = self.__width / 4
+
+        quarter_height = self.__height / 4
+        self._right_top_quarter = Vector2d(
+            self.right_mid.x, self.right_mid.y + quarter_height
+        )
+        self._right_bottom_quarter = Vector2d(
+            self.right_mid.x, self.right_mid.y - quarter_height
+        )
+        self._left_top_quarter = Vector2d(
+            self.left_mid.x, self.left_mid.y + quarter_height
+        )
+        self._left_bottom_quarter = Vector2d(
+            self.left_mid.x, self.left_mid.y - quarter_height
+        )
+        self._top_left_quarter = Vector2d(
+            self.top_mid.x - quarter_width, self.top_mid.y
+        )
+        self._top_right_quarter = Vector2d(
+            self.top_mid.x + quarter_width, self.top_mid.y
+        )
+        self._bottom_left_quarter = Vector2d(
+            self.bottom_mid.x - quarter_width, self.bottom_mid.y
+        )
+        self._bottom_right_quarter = Vector2d(
+            self.bottom_mid.x + quarter_width, self.bottom_mid.y
+        )
+
+    @property
+    def right_top_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice superior direito
+        e o ponto médio do lado direito.
+
+        :return: Ponto médio do lado direito do retângulo.
+        :rtype: Vector2d
+        """
+        return self._right_top_quarter
+
+    @right_top_quarter.setter
+    def right_top_quarter(self, new_top_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior direito
+        e o ponto médio do lado direito.
+
+        :param new_top_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice superior direito e o ponto médio do lado direito.
+        :type new_top_quarter: Vector2d
+        """
+        if isinstance(new_top_quarter, Vector2d):
+            vector_to_add = new_top_quarter.distance_vector(
+                self.right_top_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def right_bottom_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice inferior direito
+        e o ponto médio do lado direito.
+
+        :return: Ponto médio do lado direito do retângulo.
+        :rtype: Vector2d
+        """
+        return self._right_bottom_quarter
+
+    @right_bottom_quarter.setter
+    def right_bottom_quarter(self, new_bottom_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior direito
+        e o ponto médio do lado direito.
+
+        :param new_bottom_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice inferior direito e o ponto médio do lado direito.
+        :type new_bottom_quarter: Vector2d
+        """
+        if isinstance(new_bottom_quarter, Vector2d):
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.right_bottom_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def left_top_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice superior esquerdo
+        e o ponto médio do lado esquerdo.
+
+        :return: Ponto médio do lado esquerdo do retângulo.
+        :rtype: Vector2d
+        """
+        return self._left_top_quarter
+
+    @left_top_quarter.setter
+    def left_top_quarter(self, new_top_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior esquerdo
+        e o ponto médio do lado esquerdo.
+
+        :param new_top_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice superior esquerdo e o ponto médio do lado esquerdo.
+        :type new_top_quarter: Vector2d
+        """
+        if isinstance(new_top_quarter, Vector2d):
+            vector_to_add = new_top_quarter.distance_vector(
+                self.left_top_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def left_bottom_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice inferior esquerdo
+        e o ponto médio do lado esquerdo.
+
+        :return: Ponto médio do lado esquerdo do retângulo.
+        :rtype: Vector2d
+        """
+        return self._left_bottom_quarter
+
+    @left_bottom_quarter.setter
+    def left_bottom_quarter(self, new_bottom_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior esquerdo
+        e o ponto médio do lado esquerdo.
+
+        :param new_bottom_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice inferior esquerdo e o ponto médio do lado esquerdo.
+        :type new_bottom_quarter: Vector2d
+        """
+        if isinstance(new_bottom_quarter, Vector2d):
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.left_bottom_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def top_left_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice superior esquerdo
+        e o ponto médio do lado superior.
+
+        :return: Ponto médio do lado superior do retângulo.
+        :rtype: Vector2d
+        """
+        return self._top_left_quarter
+
+    @top_left_quarter.setter
+    def top_left_quarter(self, new_top_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior esquerdo
+        e o ponto médio do lado superior.
+
+        :param new_top_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice superior esquerdo e o ponto médio do lado superior.
+        :type new_top_quarter: Vector2d
+        """
+        if isinstance(new_top_quarter, Vector2d):
+            vector_to_add = new_top_quarter.distance_vector(
+                self.top_left_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def top_right_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice superior direito
+        e o ponto médio do lado superior.
+
+        :return: Ponto médio do lado superior do retângulo.
+        :rtype: Vector2d
+        """
+        return self._top_right_quarter
+
+    @top_right_quarter.setter
+    def top_right_quarter(self, new_top_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice superior direito
+        e o ponto médio do lado superior.
+
+        :param new_top_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice superior direito e o ponto médio do lado superior.
+        :type new_top_quarter: Vector2d
+        """
+        if isinstance(new_top_quarter, Vector2d):
+            vector_to_add = new_top_quarter.distance_vector(
+                self.top_right_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def bottom_left_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice inferior esquerdo
+        e o ponto médio do lado inferior.
+
+        :return: Ponto médio do lado inferior do retângulo.
+        :rtype: Vector2d
+        """
+        return self._bottom_left_quarter
+
+    @bottom_left_quarter.setter
+    def bottom_left_quarter(self, new_bottom_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior esquerdo
+        e o ponto médio do lado inferior.
+
+        :param new_bottom_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice inferior esquerdo e o ponto médio do lado inferior.
+        :type new_bottom_quarter: Vector2d
+        """
+        if isinstance(new_bottom_quarter, Vector2d):
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.bottom_left_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
+    @property
+    def bottom_right_quarter(self):
+        """
+        Retorna o ponto médio do segmento formado pelo vertice inferior direito
+        e o ponto médio do lado inferior.
+
+        :return: Ponto médio do lado inferior do retângulo.
+        :rtype: Vector2d
+        """
+        return self._bottom_right_quarter
+
+    @bottom_right_quarter.setter
+    def bottom_right_quarter(self, new_bottom_quarter: "Vector2d"):
+        """
+        Setter para o ponto médio do segmento formado pelo vertice inferior direito
+        e o ponto médio do lado inferior.
+
+        :param new_bottom_quarter: Novo ponto médio do ponto médio do segmento
+        formado pelo vertice inferior direito e o ponto médio do lado inferior.
+        :type new_bottom_quarter: Vector2d
+        """
+        if isinstance(new_bottom_quarter, Vector2d):
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.bottom_right_quarter
+            )
+            self._center += vector_to_add
+            self.__compute_mid_points()
 
     def is_interior_point(self, vector: "Vector2d"):
         """
@@ -595,4 +833,19 @@ class Rectangle:
             and vector.x <= self.right
             and vector.y >= self.bottom
             and vector.y <= self.top
+        )
+
+    def is_not_poligonal_point(self, vector: "Vector2d"):
+        """
+        Verifica se o ponto correspondente ao vetor passado
+        como argumento é interior ao retângulo.
+
+        :param vector: Vetor que representa o ponto para checar.
+        :type vector: "Vector2d"
+        """
+        return (
+            vector.x > self.left
+            and vector.x < self.right
+            and vector.y > self.bottom
+            and vector.y < self.top
         )
