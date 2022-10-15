@@ -102,7 +102,7 @@ class Tile(GameObject):
         tile_index = self.not_taken_values.index(value_tile)
 
         if self.not_taken_values[tile_index].position is value_tile.position:
-            self.set_rotation(180)
+            self.set_rotation(90)
 
     def set_rotation(self, rotation):
         self.rotation = rotation
