@@ -32,7 +32,7 @@ class Game:
                 new_tile.layer_batch = self.layer_batch
                 self.game_tiles.append(new_tile)
 
-        self.not_taken_tiles: list[Tile] = copy.copy(self.game_tiles)
+        self.not_taken_tiles = copy.copy(self.game_tiles)
 
     @property
     def is_hand_tile_selected(self):
@@ -79,9 +79,7 @@ class Game:
                         self.board_tiles,
                     )
 
-                    selected_board_tile.change_board_tile_property_after_move(
-                        delete_item
-                    )
+                    selected_board_tile.change_board_tile_property_after_move(delete_item)
                     self.player.hand.remove(select_hand_tile)
                     self.board_tiles.append(select_hand_tile)
                     print(select_hand_tile.position)
@@ -102,8 +100,8 @@ class Game:
 
         random_number = random.randint(0, len(self.not_taken_tiles) - 1)
         start_tile = self.not_taken_tiles[random_number]
-        start_tile.x = self.window_measurements["width"] / 2
-        start_tile.y = self.window_measurements["height"] / 2
+        start_tile.x = self.window_measurements["width"] // 2
+        start_tile.y = self.window_measurements["height"] // 2
         start_tile.batch = self.game_batch
         start_tile.game_status = TileGameStatus.TABLE
         self.board_tiles.append(start_tile)
@@ -111,18 +109,16 @@ class Game:
 
     def start_game(self):
         self.create_tiles()
+        self.set_random_start_tile()
         self.give_a_player_random_tiles()
         self.hand_position(10)
-        self.set_random_start_tile()
 
     def hand_position(self, gap):
         tile_width = self.player.hand[0].width
         total_width = tile_width * len(self.player.hand)
         gap_total = len(self.player.hand) - 1
         surround_width = (
-            self.window_measurements["width"]
-            - total_width
-            - (gap_total * gap)
+            self.window_measurements["width"] - total_width - (gap_total * gap)
         ) / 2
         for index, tile in enumerate(self.player.hand):
             if index == 0:

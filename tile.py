@@ -54,12 +54,8 @@ class Tile(GameObject):
         super().__init__(position, self.img_path, batch, rotation)
         self.first_value = first_value
         self.second_value = second_value
-        self.first_value_info = TileValue(
-            self.first_value, self.first_value_position
-        )
-        self.second_value_info = TileValue(
-            self.second_value, self.second_value_position
-        )
+        self.first_value_info = TileValue(self.first_value, self.first_value_position)
+        self.second_value_info = TileValue(self.second_value, self.second_value_position)
         self.not_taken_values = [
             self.first_value_info,
             self.second_value_info,
@@ -74,10 +70,7 @@ class Tile(GameObject):
         )
 
     def on_click(self):
-        if (
-            self.game_status is TileGameStatus.HAND
-            and not self.another_tile_was_clicked
-        ):
+        if self.game_status is TileGameStatus.HAND and not self.another_tile_was_clicked:
             self.layer_rectangle = RectGameObject(
                 Vector2d(self.x + 5, self.y + 5),
                 self.width - 10,
@@ -127,9 +120,7 @@ class Tile(GameObject):
     ):
 
         self._delete_layer()
-        self.change_position(
-            board_tile, deleteValue, window_measurements, board_tiles
-        )
+        self.change_position(board_tile, deleteValue, window_measurements, board_tiles)
         self.game_status = TileGameStatus.TABLE
         self.remove_available_value(deleteValue)
         self.is_clicked = False
@@ -145,12 +136,10 @@ class Tile(GameObject):
 
     def checkes_if_overpass_bounds(self, window_measurements):
         if (
-            self._test_rectangle.left
-            < (window_measurements["left"] - self.width)
+            self._test_rectangle.left < (window_measurements["left"] - self.width)
             or self.right > (window_measurements["right"] - self.width)
-            or self._test_rectangle.top > window_measurements["top"] - 20
-            or self._test_rectangle.bottom
-            < window_measurements["bottom"] - 30
+            or self._test_rectangle.top > window_measurements["top"]
+            or self._test_rectangle.bottom < window_measurements["bottom"]
         ):
             return True
         return False
@@ -162,67 +151,63 @@ class Tile(GameObject):
         window_measurements,
         board_tiles,
     ):
-        tile_value_index = self.not_taken_values.index(board_tile_value_info)
-        tile_value_info = self.not_taken_values[tile_value_index]
+        self_tile_value_index = self.not_taken_values.index(board_tile_value_info)
+        self_tile_value_info = self.not_taken_values[self_tile_value_index]
         self.correct_tile(board_tile_value_info)
         is_possible_to_move = False
         colides = False
 
         rotation_value = 0
         if (
-            tile_value_info.position is TileValuePosition.TOP
-            or tile_value_info.position is TileValuePosition.BOTTOM
+            self_tile_value_info.position is TileValuePosition.TOP
+            or self_tile_value_info.position is TileValuePosition.BOTTOM
         ):
             rotation_value = 90
         elif (
-            tile_value_info.position is TileValuePosition.LEFT
-            or tile_value_info.position is TileValuePosition.RIGHT
+            self_tile_value_info.position is TileValuePosition.LEFT
+            or self_tile_value_info.position is TileValuePosition.RIGHT
         ):
-
             rotation_value = 0
-        for available_position in tile_value_info.available_position:
+        for (
+            self_tile_value_info_available_position
+        ) in self_tile_value_info.available_position:
             for (
-                available_position_in_board_tile
+                board_tile_value_info_available_position
             ) in board_tile_value_info.available_position:
-                print(
-                    available_position_in_board_tile,
-                    available_position,
-                )
-                new_position = getattr(
-                    board_tile, available_position_in_board_tile
+                rect_position_to_move = getattr(
+                    board_tile, board_tile_value_info_available_position
                 )
                 setattr(
-                    self._test_rectangle, available_position, new_position
+                    self._test_rectangle,
+                    self_tile_value_info_available_position,
+                    rect_position_to_move,
                 )
-                for tile in board_tiles:
-                    if tile.checks_if_another_object_colides(
-                        self._test_rectangle
-                    ):
+                if self.checkes_if_overpass_bounds(window_measurements):
+                    continue
+                if not self.checks_if_test_rectangle_collids_with_a_object_inside_list(
+                    board_tiles
+                ) and not self.checkes_if_overpass_bounds(window_measurements):
+                    self.x = self._test_rectangle.x
+                    self.y = self._test_rectangle.y
+                    return
+        self.set_rotation(rotation_value)
+        self.change_position(
+            board_tile, board_tile_value_info, window_measurements, board_tiles
+        )
 
-                        colides = True
-                        break
-                if (
-                    not self.checkes_if_overpass_bounds(window_measurements)
-                    and not colides
-                ):
-                    is_possible_to_move = True
-                    break
-            if is_possible_to_move:
-                ##self.position = self._test_rectangle.position
-                self.x = self._test_rectangle.x
-                self.y = self._test_rectangle.y
-                return
-                break
-        if not is_possible_to_move:
-            self._test_rectangle.x = self.x
-            self._test_rectangle.y = self.y
-            self.set_rotation(rotation_value)
-            self.change_position(
-                board_tile,
-                board_tile_value_info,
-                window_measurements,
-                board_tiles,
-            )
+    def reset_test_rectangle(self):
+        self._test_rectangle.x = self.x
+        self._test_rectangle.y = self.y
+        self._test_rectangle.rotation = self.rotation
+
+    def checks_if_test_rectangle_collids_with_a_object_inside_list(
+        self,
+        list_of_objects,
+    ):
+        for object in list_of_objects:
+            if self._test_rectangle.checks_if_another_object_colides(object):
+                return True
+        return False
 
     @property
     def first_value_position(self):

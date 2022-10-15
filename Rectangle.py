@@ -274,6 +274,23 @@ class Rectangle:
         """
         return self._height
 
+    def checks_if_another_object_colides(self, rect_to_check):
+        """
+        Verifica se o GameObject colide com outro GameObject ou retângulo.
+
+        :param other: Outro GameObject
+        :type other: GameObject
+        """
+        if (
+            self.left < rect_to_check.right
+            and self.right > rect_to_check.left
+            and self.top > rect_to_check.bottom
+            and self.bottom < rect_to_check.top
+        ):
+            return True
+
+        return False
+
     @position.setter
     def position(self, vector_position: "Vector2d"):
         """
@@ -412,9 +429,7 @@ class Rectangle:
         :type new_bottom_right: "Vector2d"
         """
         if isinstance(new_bottom_right, Vector2d):
-            vector_to_add = new_bottom_right.distance_vector(
-                self._bottomright
-            )
+            vector_to_add = new_bottom_right.distance_vector(self._bottomright)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -560,12 +575,8 @@ class Rectangle:
         half_width = self.__width / 2
         self._topright = Vector2d(self.top_mid.x + half_width, self.top_mid.y)
         self._topleft = Vector2d(self._midtop.x - half_width, self._midtop.y)
-        self._bottomright = Vector2d(
-            self._midbottom.x + half_width, self._midbottom.y
-        )
-        self._bottomleft = Vector2d(
-            self._midbottom.x - half_width, self._midbottom.y
-        )
+        self._bottomright = Vector2d(self._midbottom.x + half_width, self._midbottom.y)
+        self._bottomleft = Vector2d(self._midbottom.x - half_width, self._midbottom.y)
 
     def __compute_auxiliar_vertices(self):
         quarter_width = self.__width / 4
@@ -583,12 +594,8 @@ class Rectangle:
         self._left_bottom_quarter = Vector2d(
             self.left_mid.x, self.left_mid.y - quarter_height
         )
-        self._top_left_quarter = Vector2d(
-            self.top_mid.x - quarter_width, self.top_mid.y
-        )
-        self._top_right_quarter = Vector2d(
-            self.top_mid.x + quarter_width, self.top_mid.y
-        )
+        self._top_left_quarter = Vector2d(self.top_mid.x - quarter_width, self.top_mid.y)
+        self._top_right_quarter = Vector2d(self.top_mid.x + quarter_width, self.top_mid.y)
         self._bottom_left_quarter = Vector2d(
             self.bottom_mid.x - quarter_width, self.bottom_mid.y
         )
@@ -618,9 +625,7 @@ class Rectangle:
         :type new_top_quarter: Vector2d
         """
         if isinstance(new_top_quarter, Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(
-                self.right_top_quarter
-            )
+            vector_to_add = new_top_quarter.distance_vector(self.right_top_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -646,9 +651,7 @@ class Rectangle:
         :type new_bottom_quarter: Vector2d
         """
         if isinstance(new_bottom_quarter, Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(
-                self.right_bottom_quarter
-            )
+            vector_to_add = new_bottom_quarter.distance_vector(self.right_bottom_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -674,9 +677,7 @@ class Rectangle:
         :type new_top_quarter: Vector2d
         """
         if isinstance(new_top_quarter, Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(
-                self.left_top_quarter
-            )
+            vector_to_add = new_top_quarter.distance_vector(self.left_top_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -702,9 +703,7 @@ class Rectangle:
         :type new_bottom_quarter: Vector2d
         """
         if isinstance(new_bottom_quarter, Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(
-                self.left_bottom_quarter
-            )
+            vector_to_add = new_bottom_quarter.distance_vector(self.left_bottom_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -730,9 +729,7 @@ class Rectangle:
         :type new_top_quarter: Vector2d
         """
         if isinstance(new_top_quarter, Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(
-                self.top_left_quarter
-            )
+            vector_to_add = new_top_quarter.distance_vector(self.top_left_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -758,9 +755,7 @@ class Rectangle:
         :type new_top_quarter: Vector2d
         """
         if isinstance(new_top_quarter, Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(
-                self.top_right_quarter
-            )
+            vector_to_add = new_top_quarter.distance_vector(self.top_right_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -786,9 +781,7 @@ class Rectangle:
         :type new_bottom_quarter: Vector2d
         """
         if isinstance(new_bottom_quarter, Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(
-                self.bottom_left_quarter
-            )
+            vector_to_add = new_bottom_quarter.distance_vector(self.bottom_left_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -814,9 +807,7 @@ class Rectangle:
         :type new_bottom_quarter: Vector2d
         """
         if isinstance(new_bottom_quarter, Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(
-                self.bottom_right_quarter
-            )
+            vector_to_add = new_bottom_quarter.distance_vector(self.bottom_right_quarter)
             self._center += vector_to_add
             self.__compute_mid_points()
 

@@ -104,16 +104,8 @@ class GameObject:
         :param other: Outro GameObject
         :type other: GameObject
         """
-        if (
-            self.is_not_poligonal_point(rect_to_check.top_left)
-            or self.is_not_poligonal_point(rect_to_check.top_right)
-            or self.is_not_poligonal_point(rect_to_check.bottom_left)
-            or self.is_not_poligonal_point(rect_to_check.bottom_right)
-            or (self.x == rect_to_check.x and self.y == rect_to_check.y)
-        ):
-            return True
 
-        return False
+        return self._rectangle.checks_if_another_object_colides(rect_to_check)
 
     def __eq__(self, other):
         """
