@@ -183,7 +183,7 @@ class Tile(GameObject):
                     rect_position_to_move,
                 )
                 if self.checkes_if_overpass_bounds(window_measurements):
-                    continue
+                    break
                 if not self.checks_if_test_rectangle_collids_with_a_object_inside_list(
                     board_tiles
                 ) and not self.checkes_if_overpass_bounds(window_measurements):
