@@ -14,7 +14,7 @@ if __name__ == "__main__":
         gameResources=game.game_tiles,
         width=1500,
         height=1500,
-        title="Hello World",
+        title="Domino"
     )
     game.window_measurements = window.measurements
     game.start_game()
