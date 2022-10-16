@@ -136,8 +136,8 @@ class Tile(GameObject):
 
     def checkes_if_overpass_bounds(self, window_measurements):
         if (
-            self._test_rectangle.left < (window_measurements["left"] - self.width)
-            or self.right > (window_measurements["right"] - self.width)
+            self._test_rectangle.left < (window_measurements["left"])
+            or self.right > (window_measurements["right"])
             or self._test_rectangle.top > window_measurements["top"]
             or self._test_rectangle.bottom < window_measurements["bottom"]
         ):
