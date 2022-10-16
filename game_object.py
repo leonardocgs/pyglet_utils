@@ -107,6 +107,17 @@ class GameObject:
 
         return self._rectangle.checks_if_another_object_colides(rect_to_check)
 
+    def check_if_another_object_colides_including_all_points(self, rect_to_check):
+        """
+        Verifica se o GameObject colide com outro GameObject ou retângulo.
+
+        :param other: Outro GameObject
+        :type other: GameObject
+        """
+        return self._rectangle.check_if_another_object_colides_including_all_points(
+            rect_to_check
+        )
+
     def __eq__(self, other):
         """
         Sobrecarga do operador de igualdade.

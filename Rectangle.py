@@ -291,6 +291,23 @@ class Rectangle:
 
         return False
 
+    def checks_if_another_object_colides_including_all_points(self, rect_to_check):
+        """
+        Verifica se o GameObject colide com outro GameObject ou retângulo.
+
+        :param other: Outro GameObject
+        :type other: GameObject
+        """
+        if (
+            self.left <= rect_to_check.right
+            and self.right >= rect_to_check.left
+            and self.top >= rect_to_check.bottom
+            and self.bottom <= rect_to_check.top
+        ):
+            return True
+
+        return False
+
     @position.setter
     def position(self, vector_position: "Vector2d"):
         """

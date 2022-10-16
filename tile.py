@@ -1,3 +1,4 @@
+import copy
 from operator import pos
 from os import posix_fadvise
 from pickle import TRUE
@@ -94,14 +95,10 @@ class Tile(GameObject):
     def _delete_layer(self):
         self.layer_rectangle.delete()
 
-    def correct_tile(
-        self,
-        value_tile,
-    ):
+    def correct_tile(self, value_tile):
 
-        tile_index = self.not_taken_values.index(value_tile)
-
-        if self.not_taken_values[tile_index].position is value_tile.position:
+        requested_value = self.return_request_available_value(value_tile)
+        if requested_value.position is value_tile.position:
             self.set_rotation(90)
 
     def set_rotation(self, rotation):
@@ -122,7 +119,6 @@ class Tile(GameObject):
         self._delete_layer()
         self.change_position(board_tile, deleteValue, window_measurements, board_tiles)
         self.game_status = TileGameStatus.TABLE
-        self.remove_available_value(deleteValue)
         self.is_clicked = False
 
     def remove_available_value(self, deleteValue):
@@ -139,10 +135,20 @@ class Tile(GameObject):
             self._test_rectangle.left < (window_measurements["left"])
             or self.right > (window_measurements["right"])
             or self._test_rectangle.top > window_measurements["top"]
-            or self._test_rectangle.bottom < window_measurements["bottom"]
+            or self._test_rectangle.bottom < window_measurements["bottom"] + self.height
         ):
             return True
         return False
+
+    def return_request_available_value(self, another_value):
+        for value in self.not_taken_values:
+            if value.value == another_value.value:
+                return value
+
+    def return_request_available_value_index(self, another_value):
+        for index, value in enumerate(self.not_taken_values):
+            if value.value == another_value:
+                return index
 
     def change_position(
         self,
@@ -151,29 +157,17 @@ class Tile(GameObject):
         window_measurements,
         board_tiles,
     ):
-        self_tile_value_index = self.not_taken_values.index(board_tile_value_info)
-        self_tile_value_info = self.not_taken_values[self_tile_value_index]
+        self_tile_value_info = self.return_request_available_value(board_tile_value_info)
         self.correct_tile(board_tile_value_info)
-        is_possible_to_move = False
-        colides = False
 
-        rotation_value = 0
-        if (
-            self_tile_value_info.position is TileValuePosition.TOP
-            or self_tile_value_info.position is TileValuePosition.BOTTOM
-        ):
-            rotation_value = 90
-        elif (
-            self_tile_value_info.position is TileValuePosition.LEFT
-            or self_tile_value_info.position is TileValuePosition.RIGHT
-        ):
-            rotation_value = 0
         for (
             self_tile_value_info_available_position
         ) in self_tile_value_info.available_position:
             for (
                 board_tile_value_info_available_position
             ) in board_tile_value_info.available_position:
+                copy_board_tiles = copy.copy(board_tiles)
+                copy_board_tiles.remove(board_tile)
                 rect_position_to_move = getattr(
                     board_tile, board_tile_value_info_available_position
                 )
@@ -184,13 +178,20 @@ class Tile(GameObject):
                 )
                 if self.checkes_if_overpass_bounds(window_measurements):
                     break
-                if not self.checks_if_test_rectangle_collids_with_a_object_inside_list(
-                    board_tiles
-                ) and not self.checkes_if_overpass_bounds(window_measurements):
+                if (
+                    not self.checks_if_test_rectangle_collids_with_a_object_inside_list(
+                        board_tiles
+                    )
+                    and not self.checkes_if_overpass_bounds(window_measurements)
+                    and not self.checks_if_test_rectangle_collids_with_a_object_inside_list_including_all_points(
+                        copy_board_tiles
+                    )
+                ):
                     self.x = self._test_rectangle.x
                     self.y = self._test_rectangle.y
                     return
-        self.set_rotation(rotation_value)
+
+        self.set_rotation(self.rotation + 90)
         self.change_position(
             board_tile, board_tile_value_info, window_measurements, board_tiles
         )
@@ -208,6 +209,22 @@ class Tile(GameObject):
             if self._test_rectangle.checks_if_another_object_colides(object):
                 return True
         return False
+
+    def checks_if_test_rectangle_collids_with_a_object_inside_list_including_all_points(
+        self,
+        list_of_objects,
+    ):
+        for object in list_of_objects:
+            if self._test_rectangle.checks_if_another_object_colides_including_all_points(
+                object
+            ):
+                return True
+        return False
+
+    def remove_available_value(self, deleteValue):
+        for value_info in self.not_taken_values:
+            if value_info.value == deleteValue.value:
+                self.not_taken_values.remove(value_info)
 
     @property
     def first_value_position(self):

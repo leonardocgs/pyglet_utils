@@ -18,5 +18,5 @@ if __name__ == "__main__":
     )
     game.window_measurements = window.measurements
     game.start_game()
-    pyglet.clock.schedule(game.update, 1 / 120)
+    pyglet.clock.schedule(game.update, 1 / 60)
     pyglet.app.run()
