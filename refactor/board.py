@@ -23,6 +23,14 @@ class Board:
         else:
             return 1
 
+    def valid_tile_orientations(self, tile: list[int]):
+        list = []
+        if self.can_add_tile(tile, True):
+            list.append(True)
+        if self.can_add_tile(tile, False):
+            list.append(False)
+        return list
+
     def add_tile(self, tile: list[int], front: bool = True):
         can_add = self.can_add_tile(tile, front)
 
