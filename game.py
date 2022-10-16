@@ -33,6 +33,7 @@ class Game:
                 new_tile.left_mid = Vector2d(0, 100)
                 new_tile.layer_batch = self.layer_batch
                 self.game_tiles.append(new_tile)
+                new_tile.scale = 0.75
 
         self.not_taken_tiles = copy.copy(self.game_tiles)
 
