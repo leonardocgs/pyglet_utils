@@ -9,7 +9,7 @@
 - O jogador clica e arrastando o mouse até a peça do tabuleiro que deseja jogar
 - Após isso o computador joga sua peça
 
-##Todo
+## Todo
 
 - [ ] Aperfeiçoar algoritmo de disposição das peças
 - [ ] Adicionar o cava caso não possua peça disponível para jogar
