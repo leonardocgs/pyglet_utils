@@ -2,7 +2,9 @@
 
 ## Como iniciar o jogo?
 
-- $python3 main.py
+```shell
+$ python3 main.py
+```
 
 ## Como jogar ?
 
