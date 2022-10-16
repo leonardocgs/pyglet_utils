@@ -11,6 +11,6 @@
 
 ##Todo
 
-- [] Aperfeiçoar algoritmo de disposição das peças
-- [] Adicionar o cava caso não possua peça disponível para jogar
-- [] Adicionar condições de vitória
+- [ ] Aperfeiçoar algoritmo de disposição das peças
+- [ ] Adicionar o cava caso não possua peça disponível para jogar
+- [ ] Adicionar condições de vitória
