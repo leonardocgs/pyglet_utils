@@ -8,7 +8,7 @@ $ python3 main.py
 
 ## Como jogar ?
 
-- O jogador clica e arrastando o mouse até a peça do tabuleiro que deseja jogar
+- O jogador clica e arrasta o mouse até a peça do tabuleiro que deseja jogar
 - Após isso o computador joga sua peça
 
 ## Todo
