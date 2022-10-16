@@ -24,6 +24,7 @@ class Game:
         self.game_batch = game_batch
         self.layer_batch = layer_batch
         self.computer = Player()
+        self.is_player_turn = True
 
     def create_tiles(self):
         for first_number in range(0, 7):
@@ -67,7 +68,11 @@ class Game:
                 return tile
 
     def player_move(self):
-        if self.is_hand_tile_selected and self.is_board_tile_selected:
+        if (
+            self.is_hand_tile_selected
+            and self.is_board_tile_selected
+            and self.is_player_turn
+        ):
             select_hand_tile = self.selected_hand_tile
             selected_board_tile = self.selected_board_tile
             delete_item = None
@@ -88,6 +93,7 @@ class Game:
                     selected_board_tile.remove_available_value(delete_item)
                     self.player.hand.remove(select_hand_tile)
                     self.board_tiles.append(select_hand_tile)
+                    self.is_player_turn = False
 
                     break
 
@@ -134,8 +140,10 @@ class Game:
 
                         self.computer.hand.remove(tile)
                         self.board_tiles.append(tile)
+                        self.is_player_turn = True
 
                         return
+        self.is_player_turn = True
 
     def set_random_start_tile(self):
 
