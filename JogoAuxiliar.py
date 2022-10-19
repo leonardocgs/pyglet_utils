@@ -3,7 +3,8 @@ import random
 import pyglet
 import pyglet.shapes
 
-
+from refactor.geometry.vector2d import Vector2d
+meu_vetor = Vector2d()
 class Tabuleiro:
     def __init__(self):
         self.pec = list()

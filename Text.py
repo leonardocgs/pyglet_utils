@@ -4,7 +4,6 @@ from pyglet.window import mouse
 from Rectangle import Rectangle
 from Vector2d import Vector2d
 
-
 class Text:
     """
     Classe para ser utilizada para manipular label do pyglet.
