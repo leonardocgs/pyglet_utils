@@ -20,6 +20,8 @@ class Window(pyglet.window.Window):
         self.game = game
         self.game_agents = []
         self.game_batch = pyglet
+        self.board_tile_deegree = [0, 90]
+        self.front_available_position = []
 
     def create_player_hand_sprites(self):
         for tile in self.game.my_player.hand:
@@ -30,7 +32,7 @@ class Window(pyglet.window.Window):
             )
 
     def place_player_hand(self, gap):
-        tile_width = self.player.hand[0].width
+        tile_width: float | int = self.player.hand[0].width
         total_width = tile_width * len(self.player.hand)
         gap_total = len(self.player.hand) - 1
         surround_width = (
@@ -50,10 +52,6 @@ class Window(pyglet.window.Window):
         return rectangle.Rectangle(
             vector2d.Vector2d(half_width, half_height), self.width, self.height
         )
-        try:
-            pass
-        except expression as identifier:
-            pass
 
     @property
     def top(self):
