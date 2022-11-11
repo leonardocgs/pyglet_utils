@@ -23,8 +23,12 @@ class Window(pyglet.window.Window):
         self.game_agents = []
         self.game_batch = pyglet
         self.board_tile_deegree = [0, 90]
-        self.front_available_position: tile.AvailablePosition = 
-
+        self.front_available_position: list[tile.AvailablePosition] = [
+            tile.AvailablePosition.RIGHT_MID,
+            tile.AvailablePosition.TOP_MID,
+            tile.AvailablePosition.LEFT_MID,
+            tile.AvailablePosition.BOTTOM_MID,
+        ]
 
     def create_player_hand_sprites(self):
         for tile in self.game.my_player.hand:

@@ -1,7 +1,4 @@
 import copy
-from operator import pos
-from os import posix_fadvise
-from pickle import TRUE
 
 import pyglet
 
