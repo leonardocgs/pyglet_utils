@@ -5,6 +5,8 @@ from game_state import GameState
 from game_object import game_object
 from geometry import rectangle, vector2d
 
+from . import tile
+
 
 class Window(pyglet.window.Window):
     def __init__(
@@ -21,7 +23,8 @@ class Window(pyglet.window.Window):
         self.game_agents = []
         self.game_batch = pyglet
         self.board_tile_deegree = [0, 90]
-        self.front_available_position = []
+        self.front_available_position: tile.AvailablePosition = 
+
 
     def create_player_hand_sprites(self):
         for tile in self.game.my_player.hand:
