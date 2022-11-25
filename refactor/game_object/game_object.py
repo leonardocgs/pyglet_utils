@@ -1,7 +1,10 @@
 import pyglet
 from pyglet.window import mouse
-
+from typing import TYPE_CHECKING
 from geometry import vector2d, rectangle
+
+if TYPE_CHECKING:
+    from game_state_sprite import GameStateSprite
 
 
 class GameObject:
@@ -49,6 +52,7 @@ class GameObject:
     def __init__(
         self,
         position: "vector2d.Vector2d",
+        game_state_sprite: "GameStateSprite",
         img_path: str,
         batch=None,
         rotation=0,
@@ -74,6 +78,8 @@ class GameObject:
         self._create_rectangle(position)
         self._create_sprite(batch)
         self.rotation = self._rotation
+        self.was_clicked: bool = False
+        self._game_state_sprite: GameStateSprite = game_state_sprite
 
     def _create_image(self, img_path):
         pyglet.resource.path = ["../Dominoes/images"]
@@ -117,19 +123,6 @@ class GameObject:
         """
 
         return self._rectangle.checks_if_another_object_colides(rect_to_check)
-
-    def check_if_another_object_colides_including_all_points(
-        self, rect_to_check
-    ):
-        """
-        Verifica se o GameObject colide com outro GameObject ou retângulo.
-
-        :param other: Outro GameObject
-        :type other: GameObject
-        """
-        return self._rectangle.check_if_another_object_colides_including_all_points(
-            rect_to_check
-        )
 
     def __eq__(self, other):
         """
@@ -866,9 +859,12 @@ class GameObject:
         Método para determinar o comportamento do clique.
 
         """
+        self._game_state_sprite.choose_tile_index = (
+            self._game_state_sprite.player_hand_sprites.index(self)
+        )
 
     def on_unclick(self):
-        pass
+        self._game_state_sprite.choose_tile_index = -1
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:

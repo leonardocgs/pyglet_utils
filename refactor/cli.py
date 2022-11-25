@@ -21,18 +21,27 @@ while game.ongoing:
                 for tile in other_player.hand:
                     tileAmountStr += "/"
 
-                if (other_player.controllable):
-                    print (f"Você: {tileAmountStr}")
+                if other_player.controllable:
+                    print(f"Você: {tileAmountStr}")
                 else:
-                    print (f"{other_player.name}: {tileAmountStr}")
+                    print(f"{other_player.name}: {tileAmountStr}")
 
             print("")
             print(player.hand)
             chosen = int(input(f"Escolha uma peça {player.valid_indexes}: "))
-            valid_orientations = game.board.valid_tile_orientations(player.hand[chosen])
+            valid_orientations = game.board.valid_tile_orientations(
+                player.hand[chosen]
+            )
 
-            if (len(valid_orientations)):
-                front = valid_orientations[0] if len(valid_orientations) == 1 or not len(game.board.state) else bool(int(input(f"1 - jogar na frente, 0 - jogar atrás: ")))
+            if len(valid_orientations):
+                front = (
+                    valid_orientations[0]
+                    if len(valid_orientations) == 1
+                    or not len(game.board.state)
+                    else bool(
+                        int(input(f"1 - jogar na frente, 0 - jogar atrás: "))
+                    )
+                )
 
                 print("--------------------")
                 print("")

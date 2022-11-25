@@ -7,7 +7,9 @@ if TYPE_CHECKING:
 
 
 class Player:
-    def __init__(self, game: "GameState", name: str, controllable: bool = False):
+    def __init__(
+        self, game: "GameState", name: str, controllable: bool = False
+    ):
         self.hand = []
         self.game = game
         self.controllable = controllable
@@ -21,6 +23,7 @@ class Player:
 
             tile_orientation_str = "na frente" if front else "atrás"
             print(f"{self.name} jogou {tile_orientation_str}: {tile}")
+            print("aioh")
 
             return tile
         else:
@@ -64,9 +67,9 @@ class Player:
     def valid_tiles(self):
         valid_tiles: list[list[int]] = []
         for tile in self.hand:
-            if self.game.board.can_add_tile(tile, True) or self.game.board.can_add_tile(
-                tile, False
-            ):
+            if self.game.board.can_add_tile(
+                tile, True
+            ) or self.game.board.can_add_tile(tile, False):
                 valid_tiles.append(tile)
         return valid_tiles
 
@@ -75,9 +78,9 @@ class Player:
         valid_indexes: list[list[int]] = []
         index = 0
         for tile in self.hand:
-            if self.game.board.can_add_tile(tile, True) or self.game.board.can_add_tile(
-                tile, False
-            ):
+            if self.game.board.can_add_tile(
+                tile, True
+            ) or self.game.board.can_add_tile(tile, False):
                 valid_indexes.append(index)
             index += 1
         return valid_indexes

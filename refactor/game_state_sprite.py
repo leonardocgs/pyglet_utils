@@ -19,6 +19,7 @@ class GameStateSprite:
         self._front_index: int = 0
         self._back_index: int = 0
         self._board_graphic = BoardGraphic(window=self.window)
+        self.choose_tile_index: int = -1
 
     def create_player_hand_sprite(self, player: Player):
         player_hand = player.hand
@@ -30,9 +31,11 @@ class GameStateSprite:
                     second_tile_value=available_tile[1],
                     rotation=90,
                     batch=self.window.game_batch,
+                    game_state_sprite=self,
                 )
             )
             player_hand_sprites.append(tile_sprite)
+        self.window.game_resources = player_hand_sprites
         self.player_hand_sprites: list[
             game_object.GameObject
         ] = player_hand_sprites

@@ -14,13 +14,15 @@ class BoardGraphic:
         second_tile_value: int,
         rotation: int,
         batch: pyglet.graphics.Batch,
+        game_state_sprite,
     ) -> game_object.GameObject:
         img_path: str = f"{first_tile_value}{second_tile_value}.png"
         tile_sprite = game_object.GameObject(
             vector2d.Vector2d(0, 62.5),
-            img_path,
+            img_path=img_path,
             rotation=rotation,
             batch=batch,
+            game_state_sprite=game_state_sprite,
         )
         return tile_sprite
 

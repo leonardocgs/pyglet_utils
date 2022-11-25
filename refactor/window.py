@@ -4,6 +4,9 @@ import pyglet
 from geometry import rectangle, vector2d
 
 
+from game_object.game_object import GameObject
+
+
 class Window(pyglet.window.Window):
     def __init__(
         self,
@@ -15,6 +18,7 @@ class Window(pyglet.window.Window):
     ):
         super().__init__(width, height, title, resizable, fullscreen)
         self.game_batch: pyglet.graphics.Batch = pyglet.graphics.Batch()
+        self.game_resources: list[GameObject] = []
 
     @property
     def rect(self):
@@ -23,10 +27,6 @@ class Window(pyglet.window.Window):
         return rectangle.Rectangle(
             vector2d.Vector2d(half_width, half_height), self.width, self.height
         )
-
-    @property
-    def top(self):
-        return self.rect.top
 
     @property
     def bottom(self):
@@ -52,12 +52,12 @@ class Window(pyglet.window.Window):
         return self.rect.right
 
     def on_mouse_press(self, x, y, button, modifiers):
-        for gameResource in self.gameResources:
-            gameResource.on_mouse_press(x, y, button, modifiers)
+        for game_resources in self.game_resources:
+            game_resources.on_mouse_press(x, y, button, modifiers)
 
     def on_mouse_release(self, x, y, button, modifiers):
-        for gameResource in self.gameResources:
-            gameResource.on_mouse_release(x, y, button, modifiers)
+        for game_resources in self.game_resources:
+            game_resources.on_mouse_release(x, y, button, modifiers)
 
     def on_draw(self):
 

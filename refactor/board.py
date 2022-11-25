@@ -1,6 +1,6 @@
 class Board:
     def __init__(self):
-        self.state:list[list[int]] = []
+        self.state: list[list[int]] = []
 
     def can_add_tile(self, tile: list[int], front: bool = True):
         if len(self.state):
