@@ -2,26 +2,28 @@ from random import randint
 from time import sleep
 from board import Board
 from player_new import Player
+
+
 class GameState:
     def __init__(self):
-        self.board:Board = Board()
-        self.players:list[Player] = [
+        self.board: Board = Board()
+        self.players: list[Player] = [
             Player(self, "Você", True),
             Player(self, "Jogador 2"),
             Player(self, "Jogador 3"),
-            Player(self, "Jogador 4")
+            Player(self, "Jogador 4"),
         ]
         self.fill_player_hands()
-        self.turn:int = 0
-        self.winner:Player = None
-        self.accumulated_turn_skips:int = 0
+        self.turn: int = 0
+        self.winner: Player = None
+        self.accumulated_turn_skips: int = 0
 
     @property
     def ongoing(self):
         return not self.winner
 
     @property
-    def my_player(self):
+    def my_player(self) -> Player:
         return self.players[0]
 
     @property
@@ -47,7 +49,7 @@ class GameState:
                     player.hand.append(tiles.pop(randint(0, len(tiles) - 1)))
 
     def end_game(self):
-        current_winner:Player = None
+        current_winner: Player = None
 
         for player in self.players:
             print(f"{player.name}: {player.points}")
@@ -89,6 +91,3 @@ class GameState:
                 current_player.pass_turn(True)
 
         return None
-
-
-

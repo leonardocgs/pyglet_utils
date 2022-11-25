@@ -1,48 +1,49 @@
 import pyglet
 from pyglet.window import mouse
 
-from geometry import vector2d,rectangle
+from geometry import vector2d, rectangle
+
 
 class GameObject:
     """
-    Classe para ser utilizada para manipular sprite do pyglet.
-    Seus pontos são represantados pela classe vector2d.Vector2d,
-    ou seja eles são representados como um vetor.
-    A posição do GameObject está ancorada no ponto médio das
-    diagonais do GameObject, ou seja, seu x e y correspondem
-    aos x e y do desse ponto médio.
-    Em particular essa classe permite mover o triângulo
-    no plano cartesiano através dos :
-        Vertices:
-            top_left: Vértice superior esquerdo
-            top_right: Vértice superior direito
-            tottom_left: Vértice inferior esquerdo
-            bottom_right: Vértice inferior direito
-        Pontos médios:
-            top_mid: Ponto médio do lado superior do GameObject.
-            bottom_mid: Ponto médio do lado inferior do GameObject.
-            left_mid: Ponto médio do lado esquerdo do GameObject.
-            right_mid: Ponto médio lado direito do GameObject.
-            center: Ponto médio das diagonais do GameObject.
-        Posição:
-            position: Ponto que representa a posição do triângulo no plano
-            cartesiano.
-        Abscissa e ordenada:
-            x: Abcissa da posição do GameObject
-            y :Ordenada da posição do GameObject
-        Mover em relação a uma direção:
-            left: Move à esquerda
-            right: Move à direita
-            top: Move para cima
-            bottom :move para baixo
-    :param position: Posição inicial do GameObject
-    :type position: "vector2d.Vector2d"
-    :param img_path: path da imagem do GameObject
-    :type img_path: str
-    :param batch: Batch do GameObject
-    :type batch: [TODO:type], optional
-    :param rotation: Ângulo de rotação do triângulo no sentido horário.
-    :type rotation: int, optional
+        Classe para ser utilizada para manipular sprite do pyglet.
+        Seus pontos são represantados pela classe vector2d.Vector2d,
+        ou seja eles são representados como um vetor.
+        A posição do GameObject está ancorada no ponto médio das
+        diagonais do GameObject, ou seja, seu x e y correspondem
+    90aos x e y do desse ponto médio.
+        Em particular essa classe permite mover o triângulo
+        no plano cartesiano através dos :
+            Vertices:
+                top_left: Vértice superior esquerdo
+                top_right: Vértice superior direito
+                tottom_left: Vértice inferior esquerdo
+                bottom_right: Vértice inferior direito
+            Pontos médios:
+                top_mid: Ponto médio do lado superior do GameObject.
+                bottom_mid: Ponto médio do lado inferior do GameObject.
+                left_mid: Ponto médio do lado esquerdo do GameObject.
+                right_mid: Ponto médio lado direito do GameObject.
+                center: Ponto médio das diagonais do GameObject.
+            Posição:
+                position: Ponto que representa a posição do triângulo no plano
+                cartesiano.
+            Abscissa e ordenada:
+                x: Abcissa da posição do GameObject
+                y :Ordenada da posição do GameObject
+            Mover em relação a uma direção:
+                left: Move à esquerda
+                right: Move à direita
+                top: Move para cima
+                bottom :move para baixo
+        :param position: Posição inicial do GameObject
+        :type position: "vector2d.Vector2d"
+        :param img_path: path da imagem do GameObject
+        :type img_path: str
+        :param batch: Batch do GameObject
+        :type batch: [TODO:type], optional
+        :param rotation: Ângulo de rotação do triângulo no sentido horário.
+        :type rotation: int, optional
     """
 
     def __init__(
@@ -72,29 +73,31 @@ class GameObject:
         self._position = position
         self._create_rectangle(position)
         self._create_sprite(batch)
+        self.rotation = self._rotation
 
-
-    def _create_image(self,img_path):
+    def _create_image(self, img_path):
         pyglet.resource.path = ["../Dominoes/images"]
         pyglet.resource.reindex()
         self._image = pyglet.resource.image(img_path)
         self._image.anchor_x = self._image.width // 2
         self._image.anchor_y = self._image.height // 2
 
-    def _create_rectangle(self,position):
+    def _create_rectangle(self, position):
         self._rectangle = rectangle.Rectangle(
             position,
             self._width,
             self._height,
             self._rotation,
         )
-    def _create_sprite(self,batch):
+
+    def _create_sprite(self, batch):
         self._sprite = pyglet.sprite.Sprite(
             self._image,
             x=self._rectangle.x,
             y=self._rectangle.y,
             batch=batch,
         )
+
     def connect_GameObject_with_rectangle(self):
         """
         Conecta a classe de sprite do pyglet com a classe rectangle.Rectangle.
@@ -115,7 +118,9 @@ class GameObject:
 
         return self._rectangle.checks_if_another_object_colides(rect_to_check)
 
-    def check_if_another_object_colides_including_all_points(self, rect_to_check):
+    def check_if_another_object_colides_including_all_points(
+        self, rect_to_check
+    ):
         """
         Verifica se o GameObject colide com outro GameObject ou retângulo.
 
@@ -134,7 +139,6 @@ class GameObject:
         :type other: GameObject
         """
         return self.x == other.x and self.y == other.y
-
 
     @property
     def batch(self):

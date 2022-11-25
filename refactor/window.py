@@ -1,17 +1,12 @@
 import pyglet
-from game_state import GameState
 
 
-from game_object import game_object
 from geometry import rectangle, vector2d
-
-from . import tile
 
 
 class Window(pyglet.window.Window):
     def __init__(
         self,
-        game: GameState,
         width=None,
         height=None,
         title=None,
@@ -19,32 +14,7 @@ class Window(pyglet.window.Window):
         fullscreen=False,
     ):
         super().__init__(width, height, title, resizable, fullscreen)
-        self.game = game
-        self.game_agents = []
-        self.game_batch = pyglet
-        self.board_tile_deegree = [0, 90]
-
-    def create_player_hand_sprites(self):
-        for tile in self.game.my_player.hand:
-            img_path = f"{tile[0]}{tile[1]}.png"
-            tile_sprite = game_object.GameObject(
-                img_path=img_path,
-                position=vector2d.Vector2d(self.width // 2, self.height // 2),
-            )
-
-    def place_player_hand(self, gap):
-        tile_width: float | int = self.player.hand[0].width
-        total_width = tile_width * len(self.player.hand)
-        gap_total = len(self.player.hand) - 1
-        surround_width = (
-            self.measurements["width"] - total_width - (gap_total * gap)
-        ) / 2
-        for index, tile in enumerate(self.player.hand):
-            if index == 0:
-                tile.left = -surround_width
-            else:
-                tile.left_mid = self.player.hand[index - 1].right_mid
-                tile.left = -gap
+        self.game_batch: pyglet.graphics.Batch = pyglet.graphics.Batch()
 
     @property
     def rect(self):
@@ -92,5 +62,4 @@ class Window(pyglet.window.Window):
     def on_draw(self):
 
         self.clear()
-        for gameBatch in self.gameBatches:
-            gameBatch.draw()
+        self.game_batch.draw()

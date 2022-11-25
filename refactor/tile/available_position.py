@@ -18,6 +18,3 @@ class AvailablePosition(Enum):
     LEFT_MID = "left_mid"
     LEFT_TOP_QUARTER = "left_top_quarter"
     LEFT_BOTTOM_QUARTER = "left_bottom_quarter"
-
-
-__all__ = ["AvailablePosition"]
