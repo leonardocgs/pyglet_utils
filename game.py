@@ -118,7 +118,9 @@ class Game:
         available_tiles_copy = copy.copy(self.not_taken_tiles)
         for random_number in random_numbers:
             computer_hand.append(available_tiles_copy[random_number])
-            available_tiles_copy[random_number].game_status = TileGameStatus.HAND
+            available_tiles_copy[
+                random_number
+            ].game_status = TileGameStatus.HAND
             self.not_taken_tiles.remove(available_tiles_copy[random_number])
         self.computer.hand = computer_hand
 
@@ -132,7 +134,10 @@ class Game:
                         or tile.second_value == value.value
                     ):
                         tile.change_position(
-                            board_tile, value, self.window_measurements, self.board_tiles
+                            board_tile,
+                            value,
+                            self.window_measurements,
+                            self.board_tiles,
                         )
                         tile.game_status = TileGameStatus.TABLE
                         tile.remove_available_value(value)

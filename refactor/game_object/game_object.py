@@ -422,6 +422,19 @@ class GameObject:
         """
         return self._rectangle.rotation
 
+    @rotation.setter
+    def rotation(self, angle: int):
+        """
+        Setter para rotation do GameObject.
+        A rotação é feita no sentido horário.
+
+        :param angle: Ângulo que desejamos rotacionar.
+        :type angle: int
+        """
+        self._rectangle.rotation = angle
+        self.connect_GameObject_with_rectangle()
+        self._sprite.rotation = angle
+
     @property
     def left(self):
         """
@@ -474,6 +487,18 @@ class GameObject:
         """
         return self._rectangle.position
 
+    @position.setter
+    def position(self, vector_position: "vector2d.Vector2d"):
+        """
+        Setter para a posição do GameObject.
+
+
+        :param vector_position: Novo posição no plano ocupado pelo GameObject.
+        :type vector_position: "vector2d.Vector2d"
+        """
+        self._rectangle.position = vector_position
+        self.connect_GameObject_with_rectangle()
+
     @property
     def scale(self):
         """
@@ -522,18 +547,6 @@ class GameObject:
         :rtype: int
         """
         return self._sprite.y
-
-    @position.setter
-    def position(self, vector_position: "vector2d.Vector2d"):
-        """
-        Setter para a posição do GameObject.
-
-
-        :param vector_position: Novo posição no plano ocupado pelo GameObject.
-        :type vector_position: "vector2d.Vector2d"
-        """
-        self._rectangle.position = vector_position
-        self.connect_GameObject_with_rectangle()
 
     @batch.setter
     def batch(self, batch: "pyglet.graphics.Batch"):
@@ -840,19 +853,6 @@ class GameObject:
         """
         self._rectangle.bottom = distance
         self.connect_GameObject_with_rectangle()
-
-    @rotation.setter
-    def rotation(self, angle: int):
-        """
-        Setter para rotation do GameObject.
-        A rotação é feita no sentido horário.
-
-        :param angle: Ângulo que desejamos rotacionar.
-        :type angle: int
-        """
-        self._rectangle.rotation = angle
-        self.connect_GameObject_with_rectangle()
-        self._sprite.rotation = angle
 
     def on_click(self):
         """

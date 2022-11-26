@@ -82,50 +82,6 @@ class Rectangle:
             self.__width = self.width
 
     @property
-    def center(self) -> "vector2d.Vector2d":
-        """
-        Getter para o centro do retângulo
-        (Ponto médio das diagonais do retângulo)
-
-        :return: Centro do retângulo.
-        :rtype: "vector2d.Vector2d"
-        """
-        return self._center
-
-    @property
-    def left_mid(self) -> "vector2d.Vector2d":
-        """
-        Getter para o ponto médio do lado
-        esquerdo do retângulo.
-
-        :return: Ponto médio do lado esquerdo do retângulo.
-        :rtype: "vector2d.Vector2d"
-        """
-        return copy.copy(self._midleft)
-
-    @property
-    def right_mid(self) -> "vector2d.Vector2d":
-        """
-        Getter para o ponto médio do lado
-        direito do retângulo.
-
-        :return: Ponto médio do lado direito do retângulo.
-        :rtype: "vector2d.Vector2d"
-        """
-        return copy.copy(self._mid_right)
-
-    @property
-    def top_mid(self) -> "vector2d.Vector2d":
-        """
-        Getter para o ponto médio do lado
-        superior do retângulo.
-
-        :return: Ponto médio do lado superior do retângulo.
-        :rtype: "vector2d.Vector2d"
-        """
-        return copy.copy(self._midtop)
-
-    @property
     def bottom_mid(self) -> "vector2d.Vector2d":
         """
         Getter para o ponto médio do lado
@@ -135,6 +91,21 @@ class Rectangle:
         :rtype: "vector2d.Vector2d"
         """
         return copy.copy(self._midbottom)
+
+    @bottom_mid.setter
+    def bottom_mid(self, new_bottom_mid: "vector2d.Vector2d"):
+        """
+        Setter para o ponto médio do lado inferior.
+        Define a posição do retângulo a partir do ponto médio do lado
+        inferior do retângulo.
+
+        :param new_bottom_mid: Nova posição do ponto médio do lado inferior.
+        :type new_bottom_mid: "vector2d.Vector2d"
+        """
+        if isinstance(new_bottom_mid, vector2d.Vector2d):
+            vector_to_add = new_bottom_mid.distance_vector(self._midbottom)
+            self._center += vector_to_add
+            self.__compute_mid_points()
 
     @property
     def top_left(self) -> "vector2d.Vector2d":
@@ -147,6 +118,21 @@ class Rectangle:
         """
         return copy.copy(self._topleft)
 
+    @top_left.setter
+    def top_left(self, new_top_left: "vector2d.Vector2d"):
+        """
+        Setter para o vértice superior esquerdo do retângulo.
+        Define a posição do retângulo a partir do vértice superior
+        esquerdo do retângulo.
+
+        :param new_top_left: Nova posição do vértice superior esquerdo.
+        :type new_top_left: "vector2d.Vector2d"
+        """
+        if isinstance(new_top_left, vector2d.Vector2d):
+            vector_to_add = new_top_left.distance_vector(self._topleft)
+            self._center += vector_to_add
+            self.__compute_mid_points()
+
     @property
     def top_right(self) -> "vector2d.Vector2d":
         """
@@ -158,130 +144,19 @@ class Rectangle:
         """
         return copy.copy(self._topright)
 
-    @property
-    def bottom_left(self) -> "vector2d.Vector2d":
+    @top_right.setter
+    def top_right(self, new_top_right: "vector2d.Vector2d"):
         """
-        Getter para o vértice inferior esquerdo.
+        Setter para o vértice superior direito do retângulo.
+        Define a posição do retângulo a partir do vértice superior direito.
 
-
-        :return: Vértice inferior esquerdo.
-        :rtype: "vector2d.Vector2d"
+        :param new_top_right: Nova posição do vértice superior direito.
+        :type new_top_right: "vector2d.Vector2d"
         """
-        return copy.copy(self._bottomleft)
-
-    @property
-    def bottom_right(self) -> "vector2d.Vector2d":
-        """
-        Getter para o vértice inferior direito.
-
-
-        :return: Vértice inferior direito.
-        :rtype: "vector2d.Vector2d"
-        """
-        return copy.copy(self._bottomright)
-
-    @property
-    def rotation(self):
-        """
-        Getter para o ângulo de rotação do retângulo.
-
-        :return: Ângulo de rotação.
-        :rtype: int
-        """
-        return self._rotation
-
-    @property
-    def x(self) -> int | float:
-        """
-        Getter para a abscissa da posição do retângulo.
-
-        :return: Abcissa da posição.
-        :rtype: int | float
-        """
-        return self._center.x
-
-    @property
-    def y(self) -> int | float:
-        """
-        Getter para a ordenada da posição do retângulo.
-
-
-        :return: Ordenada da posição do retângulo.
-        :rtype: int |float
-        """
-        return self._center.y
-
-    @property
-    def left(self) -> int | float:
-        """
-        Getter para o x do lado esquerdo do retângulo.
-
-        :return: X do lado esquerdo do retângulo.
-        :rtype: int | float
-        """
-        return self.left_mid.x
-
-    @property
-    def right(self) -> int | float:
-        """
-        Getter para o x do lado direito do retângulo.
-
-        :return: X do lado direito do retângulo.
-        :rtype: int | float
-        """
-        return self.right_mid.x
-
-    @property
-    def top(self) -> int | float:
-        """
-        Getter para o y do lado superior do retângulo.
-
-        :return: y do lado superior do retângulo.
-        :rtype: int | float
-        """
-        return self.top_mid.y
-
-    @property
-    def bottom(self) -> int | float:
-        """
-        Getter para o y do lado inferior do retângulo.
-
-        :return: y do lado inferior do retângulo.
-        :rtype: int |float
-        """
-        return self.bottom_mid.y
-
-    @property
-    def position(self) -> "vector2d.Vector2d":
-        """
-        Getter para a posição do retângulo.
-        A posição do retângulo, por sua vez,
-        está configurada como o seu centro.
-
-        :return: Posição do retângulo
-        :rtype: "vector2d.Vector2d"
-        """
-        return self._center
-
-    @property
-    def width(self) -> int | float:
-        """
-        Getter para a largura do retângulo.
-
-        :return: Largura do retângulo.
-        :rtype: int | float
-        """
-        return self._width
-
-    @property
-    def height(self) -> int | float:
-        """
-        Getter para a altura do retângulo.
-
-        :return: Altura do retângulo.
-        :rtype: int | float
-        """
-        return self._height
+        if isinstance(new_top_right, vector2d.Vector2d):
+            vector_to_add = new_top_right.distance_vector(self._topright)
+            self._center += vector_to_add
+            self.__compute_mid_points()
 
     def checks_if_another_object_colides(self, rect_to_check):
         """
@@ -300,6 +175,18 @@ class Rectangle:
 
         return False
 
+    @property
+    def position(self) -> "vector2d.Vector2d":
+        """
+        Getter para a posição do retângulo.
+        A posição do retângulo, por sua vez,
+        está configurada como o seu centro.
+
+        :return: Posição do retângulo
+        :rtype: "vector2d.Vector2d"
+        """
+        return self._center
+
     @position.setter
     def position(self, vector_position: "vector2d.Vector2d"):
         """
@@ -310,6 +197,17 @@ class Rectangle:
         :type vector_position: "vector2d.Vector2d"
         """
         self._center = vector_position
+
+    @property
+    def center(self) -> "vector2d.Vector2d":
+        """
+        Getter para o centro do retângulo
+        (Ponto médio das diagonais do retângulo)
+
+        :return: Centro do retângulo.
+        :rtype: "vector2d.Vector2d"
+        """
+        return self._center
 
     @center.setter
     def center(self, new_center: "vector2d.Vector2d"):
@@ -324,6 +222,17 @@ class Rectangle:
         if isinstance(new_center, vector2d.Vector2d):
             self._center = new_center
             self.__compute_mid_points()
+
+    @property
+    def left_mid(self) -> "vector2d.Vector2d":
+        """
+        Getter para o ponto médio do lado
+        esquerdo do retângulo.
+
+        :return: Ponto médio do lado esquerdo do retângulo.
+        :rtype: "vector2d.Vector2d"
+        """
+        return copy.copy(self._midleft)
 
     @left_mid.setter
     def left_mid(self, new_left_mid: "vector2d.Vector2d"):
@@ -340,6 +249,17 @@ class Rectangle:
             self._center += vector_to_add
             self.__compute_mid_points()
 
+    @property
+    def right_mid(self) -> "vector2d.Vector2d":
+        """
+        Getter para o ponto médio do lado
+        direito do retângulo.
+
+        :return: Ponto médio do lado direito do retângulo.
+        :rtype: "vector2d.Vector2d"
+        """
+        return copy.copy(self._mid_right)
+
     @right_mid.setter
     def right_mid(self, new_right_mid: "vector2d.Vector2d"):
         """
@@ -354,6 +274,17 @@ class Rectangle:
             vector_to_add = new_right_mid.distance_vector(self._mid_right)
             self._center += vector_to_add
             self.__compute_mid_points()
+
+    @property
+    def top_mid(self) -> "vector2d.Vector2d":
+        """
+        Getter para o ponto médio do lado
+        superior do retângulo.
+
+        :return: Ponto médio do lado superior do retângulo.
+        :rtype: "vector2d.Vector2d"
+        """
+        return copy.copy(self._midtop)
 
     @top_mid.setter
     def top_mid(self, new_top_mid: "vector2d.Vector2d"):
@@ -370,49 +301,16 @@ class Rectangle:
             self._center += vector_to_add
             self.__compute_mid_points()
 
-    @bottom_mid.setter
-    def bottom_mid(self, new_bottom_mid: "vector2d.Vector2d"):
+    @property
+    def bottom_left(self) -> "vector2d.Vector2d":
         """
-        Setter para o ponto médio do lado inferior.
-        Define a posição do retângulo a partir do ponto médio do lado
-        inferior do retângulo.
+        Getter para o vértice inferior esquerdo.
 
-        :param new_bottom_mid: Nova posição do ponto médio do lado inferior.
-        :type new_bottom_mid: "vector2d.Vector2d"
-        """
-        if isinstance(new_bottom_mid, vector2d.Vector2d):
-            vector_to_add = new_bottom_mid.distance_vector(self._midbottom)
-            self._center += vector_to_add
-            self.__compute_mid_points()
 
-    @top_left.setter
-    def top_left(self, new_top_left: "vector2d.Vector2d"):
+        :return: Vértice inferior esquerdo.
+        :rtype: "vector2d.Vector2d"
         """
-        Setter para o vértice superior esquerdo do retângulo.
-        Define a posição do retângulo a partir do vértice superior
-        esquerdo do retângulo.
-
-        :param new_top_left: Nova posição do vértice superior esquerdo.
-        :type new_top_left: "vector2d.Vector2d"
-        """
-        if isinstance(new_top_left, vector2d.Vector2d):
-            vector_to_add = new_top_left.distance_vector(self._topleft)
-            self._center += vector_to_add
-            self.__compute_mid_points()
-
-    @top_right.setter
-    def top_right(self, new_top_right: "vector2d.Vector2d"):
-        """
-        Setter para o vértice superior direito do retângulo.
-        Define a posição do retângulo a partir do vértice superior direito.
-
-        :param new_top_right: Nova posição do vértice superior direito.
-        :type new_top_right: "vector2d.Vector2d"
-        """
-        if isinstance(new_top_right, vector2d.Vector2d):
-            vector_to_add = new_top_right.distance_vector(self._topright)
-            self._center += vector_to_add
-            self.__compute_mid_points()
+        return copy.copy(self._bottomleft)
 
     @bottom_left.setter
     def bottom_left(self, new_bottom_left: "vector2d.Vector2d"):
@@ -428,6 +326,17 @@ class Rectangle:
             self._center += vector_to_add
             self.__compute_mid_points()
 
+    @property
+    def bottom_right(self) -> "vector2d.Vector2d":
+        """
+        Getter para o vértice inferior direito.
+
+
+        :return: Vértice inferior direito.
+        :rtype: "vector2d.Vector2d"
+        """
+        return copy.copy(self._bottomright)
+
     @bottom_right.setter
     def bottom_right(self, new_bottom_right: "vector2d.Vector2d"):
         """
@@ -442,6 +351,16 @@ class Rectangle:
             self._center += vector_to_add
             self.__compute_mid_points()
 
+    @property
+    def x(self) -> int | float:
+        """
+        Getter para a abscissa da posição do retângulo.
+
+        :return: Abcissa da posição.
+        :rtype: int | float
+        """
+        return self._center.x
+
     @x.setter
     def x(self, new_x: int):
         """
@@ -453,6 +372,17 @@ class Rectangle:
         self._center.x = new_x
         self.__compute_mid_points()
 
+    @property
+    def y(self) -> int | float:
+        """
+        Getter para a ordenada da posição do retângulo.
+
+
+        :return: Ordenada da posição do retângulo.
+        :rtype: int |float
+        """
+        return self._center.y
+
     @y.setter
     def y(self, new_y: int):
         """
@@ -463,6 +393,16 @@ class Rectangle:
         """
         self._center.y = new_y
         self.__compute_mid_points()
+
+    @property
+    def left(self) -> int | float:
+        """
+        Getter para o x do lado esquerdo do retângulo.
+
+        :return: X do lado esquerdo do retângulo.
+        :rtype: int | float
+        """
+        return self.left_mid.x
 
     @left.setter
     def left(self, distance: int):
@@ -478,6 +418,16 @@ class Rectangle:
         add_vector = vector2d.Vector2d(distance, 0)
         self.left_mid -= add_vector
 
+    @property
+    def right(self) -> int | float:
+        """
+        Getter para o x do lado direito do retângulo.
+
+        :return: X do lado direito do retângulo.
+        :rtype: int | float
+        """
+        return self.right_mid.x
+
     @right.setter
     def right(self, distance: int):
         """
@@ -491,6 +441,16 @@ class Rectangle:
         """
         add_vector = vector2d.Vector2d(distance, 0)
         self.right_mid += add_vector
+
+    @property
+    def top(self) -> int | float:
+        """
+                Getter para o y do lado superior do retângulo.
+        _
+                :return: y do lado superior do retângulo.
+                :rtype: int | float
+        """
+        return self.top_mid.y
 
     @top.setter
     def top(self, distance: int):
@@ -506,6 +466,16 @@ class Rectangle:
         add_vector = vector2d.Vector2d(0, distance)
         self.top_mid += add_vector
 
+    @property
+    def bottom(self) -> int | float:
+        """
+        Getter para o y do lado inferior do retângulo.
+
+        :return: y do lado inferior do retângulo.
+        :rtype: int |float
+        """
+        return self.bottom_mid.y
+
     @bottom.setter
     def bottom(self, distance: int):
         """
@@ -520,6 +490,16 @@ class Rectangle:
         add_vector = vector2d.Vector2d(0, distance)
         self.bottom_mid -= add_vector
 
+    @property
+    def rotation(self):
+        """
+        Getter para o ângulo de rotação do retângulo.
+
+        :return: Ângulo de rotação.
+        :rtype: int
+        """
+        return self._rotation
+
     @rotation.setter
     def rotation(self, angle: int):
         """
@@ -533,6 +513,16 @@ class Rectangle:
         self.__compute_mid_points()
         self._rotation = angle
 
+    @property
+    def width(self) -> int | float:
+        """
+        Getter para a largura do retângulo.
+
+        :return: Largura do retângulo.
+        :rtype: int | float
+        """
+        return self._width
+
     @width.setter
     def width(self, newwidth):
         """
@@ -544,6 +534,16 @@ class Rectangle:
         self.__width = newwidth
         self._width = newwidth
         self.__compute_mid_points()
+
+    @property
+    def height(self) -> int | float:
+        """
+        Getter para a altura do retângulo.
+
+        :return: Altura do retângulo.
+        :rtype: int | float
+        """
+        return self._height
 
     @height.setter
     def height(self, new_height):
@@ -557,36 +557,44 @@ class Rectangle:
         self._height = new_height
         self.__compute_mid_points()
 
-    def __compute_mid_points(self):
+    def __compute_mid_points(self) -> None:
         """
         Calcula os pontos médios dos lados.
 
         """
         half_width: float = self.__width / 2
         half_height: float = self.__height / 2
-        self._midleft = vector2d.Vector2d(self.x - half_width, self.y)
-        self._mid_right = vector2d.Vector2d(self.x + half_width, self.y)
-        self._midtop = vector2d.Vector2d(self.x, self.y + half_height)
-        self._midbottom = vector2d.Vector2d(self.x, self.y - half_height)
+        self._midleft: vector2d.Vector2d = vector2d.Vector2d(
+            self.x - half_width, self.y
+        )
+        self._mid_right: vector2d.Vector2d = vector2d.Vector2d(
+            self.x + half_width, self.y
+        )
+        self._midtop: vector2d.Vector2d = vector2d.Vector2d(
+            self.x, self.y + half_height
+        )
+        self._midbottom: vector2d.Vector2d = vector2d.Vector2d(
+            self.x, self.y - half_height
+        )
         self.__compute_vertices()
         self.__compute_auxiliar_vertices()
 
-    def __compute_vertices(self):
+    def __compute_vertices(self) -> None:
         """
         Calcula os vértice do retângulo.
 
         """
         half_width = self.__width / 2
-        self._topright = vector2d.Vector2d(
+        self._topright: vector2d.Vector2d = vector2d.Vector2d(
             self.top_mid.x + half_width, self.top_mid.y
         )
-        self._topleft = vector2d.Vector2d(
+        self._topleft: vector2d.Vector2d = vector2d.Vector2d(
             self._midtop.x - half_width, self._midtop.y
         )
-        self._bottomright = vector2d.Vector2d(
+        self._bottomright: vector2d.Vector2d = vector2d.Vector2d(
             self._midbottom.x + half_width, self._midbottom.y
         )
-        self._bottomleft = vector2d.Vector2d(
+        self._bottomleft: vector2d.Vector2d = vector2d.Vector2d(
             self._midbottom.x - half_width, self._midbottom.y
         )
 
