@@ -2,6 +2,9 @@ from random import randint
 from time import sleep
 from board import Board
 from player_new import Player
+from controllable_player import ControllablePlayer
+from game_object.game_object import GameObject
+from geometry.vector2d import Vector2d
 
 from game_state_sprite import GameStateSprite
 from window import Window
@@ -11,7 +14,7 @@ class GameState:
     def __init__(self):
         self.board: Board = Board()
         self.players: list[Player] = [
-            Player(self, "Você", True),
+            ControllablePlayer(self, "Jogador principal"),
             Player(self, "Jogador 2"),
             Player(self, "Jogador 3"),
             Player(self, "Jogador 4"),
@@ -24,17 +27,54 @@ class GameState:
             height=1200, width=1200, fullscreen=True, title="Domino"
         )
         self.game_state_sprite = GameStateSprite(self.window)
+        self.board.board_graphic = self.game_state_sprite._board_graphic
+        self.choose_tile_index: int = -1
 
     def create_initial_sprites(self):
-        self.game_state_sprite.create_player_hand_sprite(self.my_player)
-        self.game_state_sprite.place_player_sprite()
+        self.create_player_hand_sprite()
+        self.board.board_graphic.place_player_hand(
+            self.my_player.hand_sprites, 20
+        )
+
+    def create_player_hand_sprite(self):
+        player_hand = self.my_player.hand
+        for available_tile in player_hand:
+            tile_sprite: GameObject = self.create_tile_sprite(
+                first_tile_value=available_tile[0],
+                second_tile_value=available_tile[1],
+                rotation=90,
+            )
+            self.my_player.hand_sprites.append(tile_sprite)
+        self.window.game_resources = self.my_player.hand_sprites
+
+    def create_tile_sprite(
+        self,
+        first_tile_value: int,
+        second_tile_value: int,
+        rotation: int,
+    ) -> GameObject:
+        img_path: str = f"{first_tile_value}{second_tile_value}.png"
+        tile_sprite = GameObject(
+            Vector2d(0, 62.5),
+            img_path=img_path,
+            rotation=rotation,
+            batch=self.window.game_batch,
+            game_state=self,
+        )
+        return tile_sprite
 
     @property
     def ongoing(self):
         return not self.winner
 
     @property
-    def my_player(self) -> Player:
+    def my_player(self) -> ControllablePlayer:
+        if not isinstance(
+            self.players[0],
+            ControllablePlayer,
+        ):
+            raise TypeError()
+
         return self.players[0]
 
     @property
@@ -43,11 +83,7 @@ class GameState:
 
     @property
     def my_turn(self):
-        return self.current_player.controllable
-
-    @property
-    def choose_tile_index(self) -> int:
-        return self.game_state_sprite.choose_tile_index
+        return isinstance(self.current_player, ControllablePlayer)
 
     def fill_player_hands(self):
         tiles: list[list[int]] = []

@@ -4,6 +4,7 @@ from board_graphic import BoardGraphic
 class Board:
     def __init__(self):
         self.state: list[list[int]] = []
+        self.board_graphic: BoardGraphic = None
 
     def can_add_tile(self, tile: list[int], front: bool = True):
         if len(self.state):

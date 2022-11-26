@@ -6,13 +6,13 @@ if TYPE_CHECKING:
     from game_state import GameState
 
 
+from game_object.game_object import GameObject
+
+
 class Player:
-    def __init__(
-        self, game: "GameState", name: str, controllable: bool = False
-    ):
+    def __init__(self, game: "GameState", name: str):
         self.hand = []
         self.game = game
-        self.controllable = controllable
         self.name = name
 
     def play_tile(
@@ -22,13 +22,8 @@ class Player:
 
         if self.game.board.add_tile(tile, front):
             self.hand.pop(index)
-            if self.controllable:
-                self.game.game_state_sprite.player_hand_sprites[index].delete()
-                self.game.game_state_sprite.player_hand_sprites.pop(index)
-            tile_sprite = self.game.game_state_sprite.create_tile_sprite(
-                tile[0], tile[1], 0
-            )
-            self.game.game_state_sprite._board_graphic.place_on_board(
+            tile_sprite = self.game.create_tile_sprite(tile[0], tile[1], 0)
+            self.game.board.board_graphic.place_on_board(
                 tile_sprite, is_first_move, front=front
             )
 

@@ -83,9 +83,7 @@ class Vector2d:
         if isinstance(vector, Vector2d):
             difference_vector = self - vector
             return difference_vector
-        raise TypeError(
-            'vector argument must be instance of "Vector2d"'
-        )
+        raise TypeError('vector argument must be instance of "Vector2d"')
 
     @property
     def opposite_vector(self) -> "Vector2d":
@@ -111,7 +109,7 @@ class Vector2d:
         lenght = math.sqrt(self.x**2 + self.y**2)
         return lenght
 
-    def __eq__(self, vector: "Vector2d") -> bool:
+    def __eq__(self, vector: object) -> bool:
         """
         Determina se duas instâncias de Vector2d são iguais.
         Dois Vector2d são iguais se e somente se tiverem o mesmo x e o mesmo y
@@ -125,6 +123,8 @@ class Vector2d:
 
         if isinstance(vector, Vector2d):
             return self.x == vector.x and self.y == vector.y
+        else:
+            raise TypeError
 
     def __hash__(self):
         return hash((self.x, self.y))

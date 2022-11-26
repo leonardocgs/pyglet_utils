@@ -27,20 +27,5 @@ class GameStateSprite:
         )
         return tile_sprite
 
-    def create_player_hand_sprite(self, player: Player):
-        player_hand = player.hand
-        player_hand_sprites: list[game_object.GameObject] = []
-        for available_tile in player_hand:
-            tile_sprite: game_object.GameObject = self.create_tile_sprite(
-                first_tile_value=available_tile[0],
-                second_tile_value=available_tile[1],
-                rotation=90,
-            )
-            player_hand_sprites.append(tile_sprite)
-        self.window.game_resources = player_hand_sprites
-        self.player_hand_sprites: list[
-            game_object.GameObject
-        ] = player_hand_sprites
-
     def place_player_sprite(self):
         self._board_graphic.place_player_hand(self.player_hand_sprites, 10)

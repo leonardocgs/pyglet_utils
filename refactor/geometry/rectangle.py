@@ -1,6 +1,8 @@
 import copy
 
 from . import vector2d
+
+
 class Rectangle:
     """
     Classe que representa um retângulo.
@@ -67,8 +69,17 @@ class Rectangle:
         self._width = width
         self._height = height
         self._center = middle_point
-        self.rotation = rotation
+        self._rotation = rotation
+        self.fix_dimensions(self.rotation)
         self.__compute_mid_points()
+
+    def fix_dimensions(self, angle: int) -> None:
+        if angle == 90 or angle == 270:
+            self.__height = self.width
+            self.__width = self.height
+        elif angle == 0 or angle == 180:
+            self.__height = self.height
+            self.__width = self.width
 
     @property
     def center(self) -> "vector2d.Vector2d":
@@ -250,7 +261,7 @@ class Rectangle:
         :return: Posição do retângulo
         :rtype: "vector2d.Vector2d"
         """
-        return self.center
+        return self._center
 
     @property
     def width(self) -> int | float:
@@ -288,7 +299,6 @@ class Rectangle:
             return True
 
         return False
-
 
     @position.setter
     def position(self, vector_position: "vector2d.Vector2d"):
@@ -519,12 +529,7 @@ class Rectangle:
         :param angle: Ângulo que desejamos rotacionar.
         :type angle: int
         """
-        if angle == 90 or angle == 270:
-            self.__height = self.width
-            self.__width = self.height
-        elif angle == 0 or angle == 180:
-            self.__height = self.height
-            self.__width = self.width
+        self.fix_dimensions(angle)
         self.__compute_mid_points()
         self._rotation = angle
 
@@ -572,10 +577,18 @@ class Rectangle:
 
         """
         half_width = self.__width / 2
-        self._topright = vector2d.Vector2d(self.top_mid.x + half_width, self.top_mid.y)
-        self._topleft = vector2d.Vector2d(self._midtop.x - half_width, self._midtop.y)
-        self._bottomright = vector2d.Vector2d(self._midbottom.x + half_width, self._midbottom.y)
-        self._bottomleft = vector2d.Vector2d(self._midbottom.x - half_width, self._midbottom.y)
+        self._topright = vector2d.Vector2d(
+            self.top_mid.x + half_width, self.top_mid.y
+        )
+        self._topleft = vector2d.Vector2d(
+            self._midtop.x - half_width, self._midtop.y
+        )
+        self._bottomright = vector2d.Vector2d(
+            self._midbottom.x + half_width, self._midbottom.y
+        )
+        self._bottomleft = vector2d.Vector2d(
+            self._midbottom.x - half_width, self._midbottom.y
+        )
 
     def __compute_auxiliar_vertices(self):
         quarter_width = self.__width / 4
@@ -593,8 +606,12 @@ class Rectangle:
         self._left_bottom_quarter = vector2d.Vector2d(
             self.left_mid.x, self.left_mid.y - quarter_height
         )
-        self._top_left_quarter = vector2d.Vector2d(self.top_mid.x - quarter_width, self.top_mid.y)
-        self._top_right_quarter = vector2d.Vector2d(self.top_mid.x + quarter_width, self.top_mid.y)
+        self._top_left_quarter = vector2d.Vector2d(
+            self.top_mid.x - quarter_width, self.top_mid.y
+        )
+        self._top_right_quarter = vector2d.Vector2d(
+            self.top_mid.x + quarter_width, self.top_mid.y
+        )
         self._bottom_left_quarter = vector2d.Vector2d(
             self.bottom_mid.x - quarter_width, self.bottom_mid.y
         )
@@ -624,7 +641,9 @@ class Rectangle:
         :type new_top_quarter: vector2d.Vector2d
         """
         if isinstance(new_top_quarter, vector2d.Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(self.right_top_quarter)
+            vector_to_add = new_top_quarter.distance_vector(
+                self.right_top_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -650,7 +669,9 @@ class Rectangle:
         :type new_bottom_quarter: vector2d.Vector2d
         """
         if isinstance(new_bottom_quarter, vector2d.Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(self.right_bottom_quarter)
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.right_bottom_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -676,7 +697,9 @@ class Rectangle:
         :type new_top_quarter: vector2d.Vector2d
         """
         if isinstance(new_top_quarter, vector2d.Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(self.left_top_quarter)
+            vector_to_add = new_top_quarter.distance_vector(
+                self.left_top_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -702,7 +725,9 @@ class Rectangle:
         :type new_bottom_quarter: vector2d.Vector2d
         """
         if isinstance(new_bottom_quarter, vector2d.Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(self.left_bottom_quarter)
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.left_bottom_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -728,7 +753,9 @@ class Rectangle:
         :type new_top_quarter: vector2d.Vector2d
         """
         if isinstance(new_top_quarter, vector2d.Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(self.top_left_quarter)
+            vector_to_add = new_top_quarter.distance_vector(
+                self.top_left_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -754,7 +781,9 @@ class Rectangle:
         :type new_top_quarter: vector2d.Vector2d
         """
         if isinstance(new_top_quarter, vector2d.Vector2d):
-            vector_to_add = new_top_quarter.distance_vector(self.top_right_quarter)
+            vector_to_add = new_top_quarter.distance_vector(
+                self.top_right_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -780,7 +809,9 @@ class Rectangle:
         :type new_bottom_quarter: vector2d.Vector2d
         """
         if isinstance(new_bottom_quarter, vector2d.Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(self.bottom_left_quarter)
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.bottom_left_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -806,7 +837,9 @@ class Rectangle:
         :type new_bottom_quarter: vector2d.Vector2d
         """
         if isinstance(new_bottom_quarter, vector2d.Vector2d):
-            vector_to_add = new_bottom_quarter.distance_vector(self.bottom_right_quarter)
+            vector_to_add = new_bottom_quarter.distance_vector(
+                self.bottom_right_quarter
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 
@@ -824,4 +857,3 @@ class Rectangle:
             and vector.y >= self.bottom
             and vector.y <= self.top
         )
-

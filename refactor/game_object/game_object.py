@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from geometry import vector2d, rectangle
 
 if TYPE_CHECKING:
-    from game_state_sprite import GameStateSprite
+    from game_state import GameState
 
 
 class GameObject:
@@ -52,7 +52,7 @@ class GameObject:
     def __init__(
         self,
         position: "vector2d.Vector2d",
-        game_state_sprite: "GameStateSprite",
+        game_state: "GameState",
         img_path: str,
         batch=None,
         rotation=0,
@@ -79,7 +79,7 @@ class GameObject:
         self._create_sprite(batch)
         self.rotation = self._rotation
         self.was_clicked: bool = False
-        self._game_state_sprite: GameStateSprite = game_state_sprite
+        self.game_state: GameState = game_state
 
     def _create_image(self, img_path):
         pyglet.resource.path = ["../Dominoes/images"]
@@ -859,12 +859,12 @@ class GameObject:
         Método para determinar o comportamento do clique.
 
         """
-        self._game_state_sprite.choose_tile_index = (
-            self._game_state_sprite.player_hand_sprites.index(self)
+        self.game_state.choose_tile_index = (
+            self.game_state.my_player.hand_sprites.index(self)
         )
 
     def on_unclick(self):
-        self._game_state_sprite.choose_tile_index = -1
+        self.game_state.choose_tile_index = -1
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:

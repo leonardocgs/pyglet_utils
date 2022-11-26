@@ -1,0 +1,77 @@
+                                                 mason.nvim 
+                                             press g? for help
+                                 https://github.com/williamboman/mason.nvim
+   (1) All   (2) LSP   (3) DAP   (4) Linter   (5) Formatter  
+  
+  Language Filter: press <C-f> to apply filter
+
+  Installed
+    ◍ eslint_d
+  
+  Installing
+    ◍ mypy
+      Successfully installed mypy-0.991 mypy-extensions-0.4.3 tomli-2.0.1 typing-extensions-4.4.0
+      
+  
+  Available
+    ◍ actionlint
+    ◍ alex
+    ◍ buf
+    ◍ buildifier
+    ◍ cfn-lint
+    ◍ cmakelang
+    ◍ codespell
+    ◍ commitlint
+    ◍ cpplint
+    ◍ cspell
+    ◍ curlylint
+    ◍ djlint
+    ◍ editorconfig-checker
+    ◍ erb-lint
+    ◍ flake8
+    ◍ gitlint
+    ◍ glint
+    ◍ golangci-lint
+    ◍ hadolint
+    ◍ haml-lint
+    ◍ joker
+    ◍ jsonlint
+    ◍ ktlint
+    ◍ luacheck
+    ◍ markdownlint
+    ◍ misspell
+    ◍ phpcs
+    ◍ phpmd
+    ◍ phpstan
+    ◍ proselint
+    ◍ protolint
+    ◍ pydocstyle
+    ◍ pylama
+    ◍ pylint
+    ◍ pyproject-flake8
+    ◍ pyre
+    ◍ quick-lint-js
+    ◍ revive
+    ◍ rome
+    ◍ rstcheck
+    ◍ rubocop
+    ◍ ruff
+    ◍ selene
+    ◍ shellcheck
+    ◍ shellharden
+    ◍ shopify-theme-check
+    ◍ solhint
+    ◍ sqlfluff
+    ◍ standardrb
+    ◍ staticcheck
+    ◍ textlint
+    ◍ tflint
+    ◍ twigcs
+    ◍ vale
+    ◍ verible
+    ◍ vint
+    ◍ vulture
+    ◍ write-good
+    ◍ xo
+    ◍ yamllint
+  

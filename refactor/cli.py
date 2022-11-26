@@ -15,7 +15,12 @@ while game.ongoing:
         if player.can_play:
             print("----- SUA VEZ! -----")
 
-            for other_player in game.players:
+            for other_player in [
+            ControllablePlayer(self, "Você"),
+            Player(self, "Jogador 2"),
+            Player(self, "Jogador 3"),
+            Player(self, "Jogador 4"),
+        ]:
                 tileAmountStr = ""
 
                 for tile in other_player.hand:
