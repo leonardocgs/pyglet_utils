@@ -1,3 +1,6 @@
+from board_graphic import BoardGraphic
+
+
 class Board:
     def __init__(self):
         self.state: list[list[int]] = []

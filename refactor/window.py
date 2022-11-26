@@ -44,6 +44,10 @@ class Window(pyglet.window.Window):
         }
 
     @property
+    def center(self):
+        return self.rect.center
+
+    @property
     def left(self):
         return self.rect.left
 

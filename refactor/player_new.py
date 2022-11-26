@@ -15,15 +15,25 @@ class Player:
         self.controllable = controllable
         self.name = name
 
-    def play_tile(self, index: int, front: bool = True):
+    def play_tile(
+        self, index: int, front: bool = True, is_first_move: bool = False
+    ):
         tile = self.hand[index]
 
         if self.game.board.add_tile(tile, front):
             self.hand.pop(index)
+            if self.controllable:
+                self.game.game_state_sprite.player_hand_sprites[index].delete()
+                self.game.game_state_sprite.player_hand_sprites.pop(index)
+            tile_sprite = self.game.game_state_sprite.create_tile_sprite(
+                tile[0], tile[1], 0
+            )
+            self.game.game_state_sprite._board_graphic.place_on_board(
+                tile_sprite, is_first_move, front=front
+            )
 
             tile_orientation_str = "na frente" if front else "atrás"
             print(f"{self.name} jogou {tile_orientation_str}: {tile}")
-            print("aioh")
 
             return tile
         else:

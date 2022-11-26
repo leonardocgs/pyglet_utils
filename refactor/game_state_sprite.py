@@ -1,7 +1,6 @@
 from window import Window
-from tile.available_position import AvailablePosition
-from player_new import Player
 
+from geometry import vector2d
 from board_graphic import BoardGraphic
 from game_object import game_object
 
@@ -9,30 +8,33 @@ from game_object import game_object
 class GameStateSprite:
     def __init__(self, window: Window):
         self.window: Window = window
-        self.front_available_position: list[AvailablePosition] = [
-            AvailablePosition.RIGHT_MID,
-            AvailablePosition.TOP_MID,
-            AvailablePosition.LEFT_MID,
-            AvailablePosition.BOTTOM_MID,
-        ]
-        self.board_tile_deegree = [0, 90, 180, 270]
-        self._front_index: int = 0
-        self._back_index: int = 0
         self._board_graphic = BoardGraphic(window=self.window)
         self.choose_tile_index: int = -1
+
+    def create_tile_sprite(
+        self,
+        first_tile_value: int,
+        second_tile_value: int,
+        rotation: int,
+    ) -> game_object.GameObject:
+        img_path: str = f"{first_tile_value}{second_tile_value}.png"
+        tile_sprite = game_object.GameObject(
+            vector2d.Vector2d(0, 62.5),
+            img_path=img_path,
+            rotation=rotation,
+            batch=self.window.game_batch,
+            game_state_sprite=self,
+        )
+        return tile_sprite
 
     def create_player_hand_sprite(self, player: Player):
         player_hand = player.hand
         player_hand_sprites: list[game_object.GameObject] = []
         for available_tile in player_hand:
-            tile_sprite: game_object.GameObject = (
-                self._board_graphic.create_tile_sprite(
-                    first_tile_value=available_tile[0],
-                    second_tile_value=available_tile[1],
-                    rotation=90,
-                    batch=self.window.game_batch,
-                    game_state_sprite=self,
-                )
+            tile_sprite: game_object.GameObject = self.create_tile_sprite(
+                first_tile_value=available_tile[0],
+                second_tile_value=available_tile[1],
+                rotation=90,
             )
             player_hand_sprites.append(tile_sprite)
         self.window.game_resources = player_hand_sprites

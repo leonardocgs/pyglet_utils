@@ -1,30 +1,29 @@
 from window import Window
-import pyglet
 from game_object import game_object
 from geometry import rectangle, vector2d
+
+from tile.available_position import AvailablePosition
 
 
 class BoardGraphic:
     def __init__(self, window: Window):
         self.window: Window = window
-
-    def create_tile_sprite(
-        self,
-        first_tile_value: int,
-        second_tile_value: int,
-        rotation: int,
-        batch: pyglet.graphics.Batch,
-        game_state_sprite,
-    ) -> game_object.GameObject:
-        img_path: str = f"{first_tile_value}{second_tile_value}.png"
-        tile_sprite = game_object.GameObject(
-            vector2d.Vector2d(0, 62.5),
-            img_path=img_path,
-            rotation=rotation,
-            batch=batch,
-            game_state_sprite=game_state_sprite,
-        )
-        return tile_sprite
+        self.tiles: list[game_object.GameObject] = []
+        self.front_available_position: list[AvailablePosition] = [
+            AvailablePosition.RIGHT_MID,
+            AvailablePosition.TOP_MID,
+            AvailablePosition.LEFT_MID,
+            AvailablePosition.BOTTOM_MID,
+        ]
+        self.back_available_position: list[AvailablePosition] = [
+            AvailablePosition.LEFT_MID,
+            AvailablePosition.TOP_MID,
+            AvailablePosition.RIGHT_MID,
+            AvailablePosition.BOTTOM_MID,
+        ]
+        self.board_tile_deegree = [0, 90, 180, 270]
+        self._front_index: int = 0
+        self._back_index: int = 0
 
     def checks_if_overpass_bounds(
         self, new_position: vector2d.Vector2d, rotation: int
@@ -40,6 +39,33 @@ class BoardGraphic:
         ):
             return True
         return False
+
+    def place_on_board(
+        self,
+        tile_sprite: game_object.GameObject,
+        is_first_move: bool = False,
+        front: bool = True,
+    ):
+        if is_first_move:
+            tile_sprite.position = self.window.center
+        if front:
+            self.tiles.append(tile_sprite)
+            setattr(
+                tile_sprite,
+                self.front_available_position[self._front_index].value,
+                self.front_available_position[
+                    self._front_index
+                ].oposite_position,
+            )
+        else:
+            self.tiles.insert(0, tile_sprite)
+            setattr(
+                tile_sprite,
+                self.back_available_position[self._front_index].value,
+                self.back_available_position[
+                    self._front_index
+                ].oposite_position,
+            )
 
     def place_player_hand(
         self, player_sprites: list[game_object.GameObject], gap

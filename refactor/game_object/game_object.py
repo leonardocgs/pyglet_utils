@@ -874,6 +874,4 @@ class GameObject:
 
     def on_mouse_release(self, x, y, button, modifiers):
         if button == mouse.LEFT:
-            mouse_position = vector2d.Vector2d(x, y)
-            if self.is_interior_point(mouse_position):
-                self.on_unclick()
+            self.on_unclick()

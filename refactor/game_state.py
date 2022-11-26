@@ -3,10 +3,8 @@ from time import sleep
 from board import Board
 from player_new import Player
 
-import pyglet
 from game_state_sprite import GameStateSprite
 from window import Window
-from player_new import Player
 
 
 class GameState:
