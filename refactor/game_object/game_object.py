@@ -137,6 +137,10 @@ class GameObject:
     def batch(self):
         return self._sprite.batch
 
+    @batch.setter
+    def batch(self, batch: "pyglet.graphics.Batch"):
+        self._sprite.batch = batch
+
     @property
     def center(self):
         """
@@ -547,10 +551,6 @@ class GameObject:
         :rtype: int
         """
         return self._sprite.y
-
-    @batch.setter
-    def batch(self, batch: "pyglet.graphics.Batch"):
-        self._sprite.batch = batch
 
     @center.setter
     def center(self, new_center: "vector2d.Vector2d"):

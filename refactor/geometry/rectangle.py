@@ -362,7 +362,7 @@ class Rectangle:
         return self._center.x
 
     @x.setter
-    def x(self, new_x: int):
+    def x(self, new_x: int | float):
         """
         Setter para o x da posição do retângulo.
 
