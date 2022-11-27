@@ -74,9 +74,9 @@ class GameObject:
         self._width = self._image.width
         self._height = self._image.height
         self._rotation = rotation
-        self._position = position
         self._create_rectangle(position)
         self._create_sprite(batch)
+        self.position = position
         self.rotation = self._rotation
         self.was_clicked: bool = False
         self.game_state: GameState = game_state
@@ -460,7 +460,6 @@ class GameObject:
         self._rectangle.top_left = new_top_left
         self.connect_GameObject_with_rectangle()
 
-
     @property
     def top_right(self):
         """
@@ -760,16 +759,12 @@ class GameObject:
         self._rectangle.y = new_y
         self.connect_GameObject_with_rectangle()
 
-
-
     @property
     def biggest_size(self):
         if self.width > self.height:
             return self.width
         if self.height > self.width:
             return self.height
-
-
 
     def on_click(self):
         """

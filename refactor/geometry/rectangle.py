@@ -196,7 +196,7 @@ class Rectangle:
         :param vector_position: Novo posição no plano ocupado pelo retângulo.
         :type vector_position: "vector2d.Vector2d"
         """
-        self._center = vector_position
+        self.center = vector_position
 
     @property
     def center(self) -> "vector2d.Vector2d":

@@ -44,11 +44,11 @@ class Board:
         can_add = self.can_add_tile(tile, front)
 
         if can_add:
+            flipped_tile = tile if can_add > 0 else tile[::-1]
             tile_sprite = self.board_graphic.create_tile_sprite(
-                tile[0], tile[1], 0, self._game_state
+                flipped_tile[0], flipped_tile[1], 0, self._game_state
             )
             self.board_graphic.place_on_board(tile_sprite, front=front)
-            flipped_tile = tile if can_add > 0 else tile[::-1]
             if front:
                 self.state.append(flipped_tile)
             else:

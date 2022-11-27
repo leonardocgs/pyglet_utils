@@ -15,15 +15,15 @@ class BoardGraphic:
         self.window: Window = window
         self.tiles: list[game_object.GameObject] = []
         self.front_available_position: list[AvailablePosition] = [
-            AvailablePosition.RIGHT_MID,
-            AvailablePosition.TOP_MID,
             AvailablePosition.LEFT_MID,
+            AvailablePosition.TOP_MID,
+            AvailablePosition.RIGHT_MID,
             AvailablePosition.BOTTOM_MID,
         ]
         self.back_available_position: list[AvailablePosition] = [
-            AvailablePosition.LEFT_MID,
-            AvailablePosition.TOP_MID,
             AvailablePosition.RIGHT_MID,
+            AvailablePosition.TOP_MID,
+            AvailablePosition.LEFT_MID,
             AvailablePosition.BOTTOM_MID,
         ]
         self.board_tile_deegree = [0, 90, 180, 270]
