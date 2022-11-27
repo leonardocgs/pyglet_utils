@@ -3,6 +3,7 @@ from board import Board
 from player_new import Player
 from controllable_player import ControllablePlayer
 from game_object.game_object import GameObject
+from time import sleep
 
 from game_state_sprite import GameStateSprite
 from window import Window
@@ -106,6 +107,7 @@ class GameState:
             return None
 
         self.turn = (self.turn + 1) % len(self.players)
+        sleep(0.1)
 
         if not self.my_turn:
             current_player: Player = self.current_player

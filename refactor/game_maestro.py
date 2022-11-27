@@ -57,12 +57,16 @@ class GameMaestro:
                 else:
                     player.pass_turn(True)
         else:
-            label = pyglet.text.Label(f'{self.game.winner} venceu!',
-                                    font_name='Times New Roman',
-                                    font_size=36,
-                                    x=self.game.window.width//2, y=self.game.window.width//2,
-                                    anchor_x='center', anchor_y='center',
-                                    batch=self.game.window.game_batch)
-            #self.game.window.game_batch
-            #print("FIM DE JOGO!!!")
-            #print(f"{self.game.winner.name} venceu!")
+            label = pyglet.text.Label(
+                f"{self.game.winner.name} venceu!",
+                font_name="Times New Roman",
+                font_size=36,
+                x=self.game.window.width // 2,
+                y=self.game.window.width // 2,
+                anchor_x="center",
+                anchor_y="center",
+                batch=self.game.window.game_batch,
+            )
+            # self.game.window.game_batch
+            # print("FIM DE JOGO!!!")
+            # print(f"{self.game.winner.name} venceu!")

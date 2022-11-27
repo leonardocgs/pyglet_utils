@@ -9,8 +9,8 @@ if TYPE_CHECKING:
 class Player:
     def __init__(self, game: "GameState", name: str):
         self.hand = []
-        self.game = game
-        self.name = name
+        self.game: "GameState" = game
+        self.name: str = name
 
     def play_tile(
         self, index: int, front: bool = True, is_first_move: bool = False
