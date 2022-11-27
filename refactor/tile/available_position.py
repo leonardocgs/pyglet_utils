@@ -19,6 +19,7 @@ class AvailablePosition(Enum):
     LEFT_TOP_QUARTER = "left_top_quarter"
     LEFT_BOTTOM_QUARTER = "left_bottom_quarter"
 
+    @property
     def oposite_position(self):
         if self is AvailablePosition.TOP_MID:
             return AvailablePosition.BOTTOM_MID
@@ -29,6 +30,7 @@ class AvailablePosition(Enum):
         elif self is AvailablePosition.RIGHT_MID:
             return AvailablePosition.LEFT_MID
 
+    @property
     def transition_position(self):
         if self is AvailablePosition.TOP_MID:
             return AvailablePosition.BOTTOM_RIGHT_QUARTER

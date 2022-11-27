@@ -1,12 +1,8 @@
 from random import randint
 from typing import TYPE_CHECKING
-from unittest import skip
 
 if TYPE_CHECKING:
     from game_state import GameState
-
-
-from game_object.game_object import GameObject
 
 
 class Player:
@@ -20,7 +16,7 @@ class Player:
     ):
         tile = self.hand[index]
 
-        if self.game.board.add_tile(tile, front, is_first_move=is_first_move):
+        if self.game.board.add_tile(tile, front):
             self.hand.pop(index)
 
             tile_orientation_str = "na frente" if front else "atrás"
@@ -28,7 +24,9 @@ class Player:
 
             return tile
         else:
-            print(f"{self.name} não pode jogar {tile_orientation_str}: {tile}")
+            print(
+                f"{self.name} não pode jogar {tile_orientation_str}: {tile}"
+            )
 
             return None
 

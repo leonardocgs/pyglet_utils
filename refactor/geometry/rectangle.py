@@ -347,7 +347,9 @@ class Rectangle:
         :type new_bottom_right: "vector2d.Vector2d"
         """
         if isinstance(new_bottom_right, vector2d.Vector2d):
-            vector_to_add = new_bottom_right.distance_vector(self._bottomright)
+            vector_to_add = new_bottom_right.distance_vector(
+                self._bottomright
+            )
             self._center += vector_to_add
             self.__compute_mid_points()
 

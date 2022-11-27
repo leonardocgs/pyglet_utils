@@ -29,7 +29,9 @@ class Game:
     def create_tiles(self):
         for first_number in range(0, 7):
             for second_number in range(first_number, 7):
-                new_tile = Tile(Vector2d(0, 100), first_number, second_number)
+                new_tile = Tile(
+                    Vector2d(0, 100), first_number, second_number
+                )
                 new_tile.left_mid = Vector2d(0, 100)
                 new_tile.layer_batch = self.layer_batch
                 self.game_tiles.append(new_tile)
@@ -90,8 +92,12 @@ class Game:
                         self.in_game_tiles,
                     )
 
-                    select_hand_tile.remove_available_value(delete_item)
-                    selected_board_tile.remove_available_value(delete_item)
+                    select_hand_tile.remove_available_value(
+                        delete_item
+                    )
+                    selected_board_tile.remove_available_value(
+                        delete_item
+                    )
                     self.player.hand.remove(select_hand_tile)
                     self.board_tiles.append(select_hand_tile)
                     self.is_player_turn = False
@@ -101,19 +107,25 @@ class Game:
             self.computer_move()
 
     def give_a_player_random_tiles(self):
-        random_numbers = random.sample(range(0, len(self.not_taken_tiles)), 7)
+        random_numbers = random.sample(
+            range(0, len(self.not_taken_tiles)), 7
+        )
         player_hand = []
         available_tiles_copy = copy.copy(self.not_taken_tiles)
         for number in random_numbers:
 
             player_hand.append(available_tiles_copy[number])
             available_tiles_copy[number].batch = self.game_batch
-            available_tiles_copy[number].game_status = TileGameStatus.HAND
+            available_tiles_copy[
+                number
+            ].game_status = TileGameStatus.HAND
             self.not_taken_tiles.remove(available_tiles_copy[number])
         self.player.hand = player_hand
 
     def give_computer_random_tiles(self):
-        random_numbers = random.sample(range(0, len(self.not_taken_tiles)), 7)
+        random_numbers = random.sample(
+            range(0, len(self.not_taken_tiles)), 7
+        )
         computer_hand = []
         available_tiles_copy = copy.copy(self.not_taken_tiles)
         for random_number in random_numbers:
@@ -121,7 +133,9 @@ class Game:
             available_tiles_copy[
                 random_number
             ].game_status = TileGameStatus.HAND
-            self.not_taken_tiles.remove(available_tiles_copy[random_number])
+            self.not_taken_tiles.remove(
+                available_tiles_copy[random_number]
+            )
         self.computer.hand = computer_hand
 
     def computer_move(self):
@@ -153,7 +167,9 @@ class Game:
 
     def set_random_start_tile(self):
 
-        random_number = random.randint(0, len(self.not_taken_tiles) - 1)
+        random_number = random.randint(
+            0, len(self.not_taken_tiles) - 1
+        )
         start_tile = self.not_taken_tiles[random_number]
         start_tile.x = self.window_measurements["width"] // 2
         start_tile.y = self.window_measurements["height"] // 2
@@ -174,7 +190,9 @@ class Game:
         total_width = tile_width * len(self.player.hand)
         gap_total = len(self.player.hand) - 1
         surround_width = (
-            self.window_measurements["width"] - total_width - (gap_total * gap)
+            self.window_measurements["width"]
+            - total_width
+            - (gap_total * gap)
         ) / 2
         for index, tile in enumerate(self.player.hand):
             if index == 0:

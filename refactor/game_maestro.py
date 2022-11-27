@@ -13,7 +13,6 @@ class GameMaestro:
 
     def current_game(self, time):
 
-        is_first_move = True
         if self.game.my_turn and self.game.choose_tile_index > 0:
 
             player = self.game.my_player
@@ -25,7 +24,6 @@ class GameMaestro:
                 valid_orientations = self.game.board.valid_tile_orientations(
                     player.hand[chosen]
                 )
-                print(chosen)
 
                 if len(valid_orientations):
                     front = (
@@ -44,12 +42,9 @@ class GameMaestro:
                     print("--------------------")
                     print("")
 
-                    played_tile = player.play_tile(
-                        chosen, front, is_first_move
-                    )
+                    played_tile = player.play_tile(chosen, front)
 
                     if played_tile:
-                        is_first_move = False
                         player.pass_turn()
                     else:
                         print(f"UEPA! Você não pode jogar essa peça.")

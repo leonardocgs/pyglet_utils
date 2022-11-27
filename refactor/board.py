@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 class Board:
-    def __init__(self, game_state: GameState) -> None:
+    def __init__(self, game_state: "GameState") -> None:
         self.state: list[list[int]] = []
         self.board_graphic: BoardGraphic = None
         self._game_state: "GameState" = game_state
@@ -40,18 +40,14 @@ class Board:
             list.append(False)
         return list
 
-    def add_tile(
-        self, tile: list[int], is_first_move: bool = True, front: bool = True
-    ):
+    def add_tile(self, tile: list[int], front: bool = True):
         can_add = self.can_add_tile(tile, front)
 
         if can_add:
             tile_sprite = self.board_graphic.create_tile_sprite(
                 tile[0], tile[1], 0, self._game_state
             )
-            self.board_graphic.place_on_board(
-                tile_sprite, is_first_move, front=front
-            )
+            self.board_graphic.place_on_board(tile_sprite, front=front)
             flipped_tile = tile if can_add > 0 else tile[::-1]
             if front:
                 self.state.append(flipped_tile)
