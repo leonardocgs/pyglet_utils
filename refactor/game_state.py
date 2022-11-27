@@ -1,5 +1,4 @@
 from random import randint
-from time import sleep
 from board import Board
 from player_new import Player
 from controllable_player import ControllablePlayer
@@ -107,7 +106,6 @@ class GameState:
             return None
 
         self.turn = (self.turn + 1) % len(self.players)
-        sleep(0.1)
 
         if not self.my_turn:
             current_player: Player = self.current_player

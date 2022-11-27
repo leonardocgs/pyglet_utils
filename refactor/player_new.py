@@ -1,5 +1,6 @@
 from random import randint
 from typing import TYPE_CHECKING
+from time import sleep
 
 if TYPE_CHECKING:
     from game_state import GameState

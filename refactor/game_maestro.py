@@ -53,3 +53,6 @@ class GameMaestro:
 
             else:
                 player.pass_turn(True)
+        else:
+            print("FIM DE JOGO!!!")
+            print(f"{self.game.winner.name} venceu!")

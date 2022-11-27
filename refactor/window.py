@@ -4,6 +4,7 @@ import pyglet
 from geometry import rectangle, vector2d
 
 
+from time import sleep
 from game_object.game_object import GameObject
 
 
