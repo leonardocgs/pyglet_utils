@@ -23,7 +23,7 @@ class GameState:
         self.winner: Player = None
         self.accumulated_turn_skips: int = 0
         self.window = Window(
-            height=1200, width=1200, fullscreen=True, title="Domino"
+            height=1200, width=2000, fullscreen=True, title="Domino"
         )
         self.game_state_sprite = GameStateSprite(self.window)
         self.board.board_graphic = self.game_state_sprite._board_graphic
@@ -76,7 +76,9 @@ class GameState:
 
         for i in range(0, 7):
             for j in range(i, 7):
-                tiles.append([i, j]) if randint(0, 1) else tiles.append([j, i])
+                tiles.append([i, j]) if randint(0, 1) else tiles.append(
+                    [j, i]
+                )
 
         for i in range(0, len(self.players)):
             player = self.players[i]
@@ -105,7 +107,7 @@ class GameState:
             return None
 
         self.turn = (self.turn + 1) % len(self.players)
-        sleep(0.5)
+        sleep(0.1)
 
         if not self.my_turn:
             current_player: Player = self.current_player

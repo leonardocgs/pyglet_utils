@@ -8,12 +8,12 @@ class GameMaestro:
 
     def start_game(self):
         self.game.create_initial_sprites()
-        pyglet.clock.schedule_interval(self.current_game, 1 / 60)
+        pyglet.clock.schedule_interval(self.current_game, 1 / 50)
         pyglet.app.run()
 
     def current_game(self, time):
 
-        if self.game.my_turn and self.game.choose_tile_index > 0:
+        if self.game.my_turn and self.game.choose_tile_index >= 0:
 
             player = self.game.my_player
 

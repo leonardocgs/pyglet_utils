@@ -16,9 +16,9 @@ class BoardGraphic:
         self.tiles: list[game_object.GameObject] = []
         self.front_available_position: list[AvailablePosition] = [
             AvailablePosition.LEFT_MID,
-            AvailablePosition.TOP_MID,
-            AvailablePosition.RIGHT_MID,
             AvailablePosition.BOTTOM_MID,
+            AvailablePosition.RIGHT_MID,
+            AvailablePosition.TOP_MID,
         ]
         self.back_available_position: list[AvailablePosition] = [
             AvailablePosition.RIGHT_MID,
@@ -26,30 +26,17 @@ class BoardGraphic:
             AvailablePosition.LEFT_MID,
             AvailablePosition.BOTTOM_MID,
         ]
-        self.board_tile_deegree = [0, 90, 180, 270]
+        self.board_tile_deegree = [0, 270, 180, 90]
         self._front_index: int = 0
         self._back_index: int = 0
         self._is_first_move = True
 
-    def checks_if_overpass_bounds(
-        self, new_position: vector2d.Vector2d, rotation: int
-    ) -> bool:
-        test_rectangle = rectangle.Rectangle(
-            new_position, 125, 65, rotation=rotation
-        )
-        if (
-            test_rectangle.right > self.window.right - 200
-            or test_rectangle.left < self.window.left + 200
-            or test_rectangle.top > self.window.top - 200
-            or test_rectangle.bottom < self.window.bottom + 200
-        ):
-            return True
-        return False
-
     def get_tile_property_position(self, front: bool) -> AvailablePosition:
         if front:
+            print(self._front_index)
             return self.front_available_position[self._front_index]
         else:
+            print(self._front_index)
             return self.back_available_position[self._back_index]
 
     def insert_tile_into_array(
@@ -66,6 +53,63 @@ class BoardGraphic:
         else:
             return self.tiles[0]
 
+    def checks_if_overpass_bounds(
+        self,
+        available_position: AvailablePosition,
+        new_position: Vector2d,
+        tile: game_object.GameObject,
+    ) -> bool:
+        test_rectangle = rectangle.Rectangle(
+            Vector2d(0, 0),
+            width=tile.width,
+            height=tile.height,
+            rotation=tile.rotation,
+        )
+        setattr(test_rectangle, available_position.value, new_position)
+        print(test_rectangle.center)
+        if (
+            test_rectangle.right > self.window.width - 50
+            or test_rectangle.left < 50
+            or test_rectangle.top > self.window.height - 200
+            or test_rectangle.bottom < 200
+        ):
+            print("Entrou")
+            return True
+        return False
+
+    def increase_index(self, front: bool):
+        if front:
+            self._front_index = (self._front_index + 1) % 4
+
+        else:
+            self._back_index = (self._back_index + 1) % 4
+
+    def correct_position(
+        self, tile_sprite: game_object.GameObject, front: bool
+    ):
+        board_tile: game_object.GameObject = self.get_tile_sprite(front)
+        available_position = self.get_tile_property_position(front)
+        test_available_new_position: Vector2d = getattr(
+            board_tile, available_position.oposite_position.value
+        )
+        cannot_add: bool = self.checks_if_overpass_bounds(
+            available_position, test_available_new_position, tile_sprite
+        )
+        if cannot_add:
+
+            self.increase_index(front)
+            return available_position.transition_position
+        else:
+            return available_position.oposite_position
+
+    def correct_tile_rotation(
+        self, tile: game_object.GameObject, front: bool
+    ):
+        if front:
+            tile.rotation = self.board_tile_deegree[self._front_index]
+        else:
+            tile.rotation = self.board_tile_deegree[self._back_index]
+
     def place_on_board(
         self, tile_sprite: game_object.GameObject, front: bool = True
     ):
@@ -74,21 +118,19 @@ class BoardGraphic:
             self._is_first_move = False
             self.tiles.append(tile_sprite)
         else:
+            board_tile_available_position: AvailablePosition = (
+                self.correct_position(tile_sprite, front)
+            )
+            self.correct_tile_rotation(tile_sprite, front)
             tile_available_position: AvailablePosition = (
                 self.get_tile_property_position(front)
             )
 
-            print(
-                "Here we go ",
-                tile_available_position.value,
-                tile_available_position.oposite_position.value,
-            )
             board_tile_sprite: game_object.GameObject = self.get_tile_sprite(
                 front
             )
             board_tile_position: Vector2d = getattr(
-                board_tile_sprite,
-                tile_available_position.oposite_position.value,
+                board_tile_sprite, board_tile_available_position.value
             )
 
             setattr(

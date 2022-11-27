@@ -25,12 +25,10 @@ class Window(pyglet.window.Window):
         half_width = self.width / 2
         half_height = self.height / 2
         return rectangle.Rectangle(
-            vector2d.Vector2d(half_width, half_height), self.width, self.height
+            vector2d.Vector2d(half_width, half_height),
+            self.width,
+            self.height,
         )
-
-    @property
-    def bottom(self):
-        return self.rect.bottom
 
     @property
     def measurements(self):
@@ -42,6 +40,14 @@ class Window(pyglet.window.Window):
             "bottom": self.bottom,
             "left": self.left,
         }
+
+    @property
+    def top(self):
+        return self.rect.top
+
+    @property
+    def bottom(self):
+        return self.rect.bottom
 
     @property
     def center(self):
@@ -64,6 +70,5 @@ class Window(pyglet.window.Window):
             game_resources.on_mouse_release(x, y, button, modifiers)
 
     def on_draw(self):
-
         self.clear()
         self.game_batch.draw()

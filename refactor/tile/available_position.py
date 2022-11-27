@@ -33,8 +33,10 @@ class AvailablePosition(Enum):
     @property
     def transition_position(self):
         if self is AvailablePosition.TOP_MID:
-            return AvailablePosition.BOTTOM_RIGHT_QUARTER
+            return AvailablePosition.RIGHT_BOTTOM_QUARTER
         elif self is AvailablePosition.BOTTOM_MID:
-            return AvailablePosition.TOP_MID
+            return AvailablePosition.LEFT_TOP_QUARTER
+        elif self is AvailablePosition.RIGHT_MID:
+            return AvailablePosition.BOTTOM_LEFT_QUARTER
         elif self is AvailablePosition.LEFT_MID:
-            return AvailablePosition.RIGHT_MID
+            return AvailablePosition.TOP_RIGHT_QUARTER
