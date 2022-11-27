@@ -11,7 +11,7 @@ from window import Window
 
 
 class GameState:
-    def __init__(self):
+    def __init__(self) -> None:
         self.board: Board = Board()
         self.players: list[Player] = [
             ControllablePlayer(self, "Jogador principal"),
@@ -36,7 +36,7 @@ class GameState:
             self.my_player.hand_sprites, 20
         )
 
-    def create_player_hand_sprite(self):
+    def create_player_hand_sprite(self) -> None:
         player_hand = self.my_player.hand
         for available_tile in player_hand:
             tile_sprite: GameObject = self.create_tile_sprite(
@@ -85,7 +85,7 @@ class GameState:
     def my_turn(self):
         return isinstance(self.current_player, ControllablePlayer)
 
-    def fill_player_hands(self):
+    def fill_player_hands(self) -> None:
         tiles: list[list[int]] = []
 
         for i in range(0, 7):
@@ -99,7 +99,7 @@ class GameState:
                 if len(tiles):
                     player.hand.append(tiles.pop(randint(0, len(tiles) - 1)))
 
-    def end_game(self):
+    def end_game(self) -> None:
         current_winner: Player = None
 
         for player in self.players:
@@ -109,7 +109,7 @@ class GameState:
 
         self.winner = current_winner
 
-    def next_turn(self):
+    def next_turn(self) -> None:
         if self.accumulated_turn_skips >= len(self.players):
             print("")
             print("Fechou o jogo! Hora de contar os pontos")

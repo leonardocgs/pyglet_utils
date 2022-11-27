@@ -2,7 +2,7 @@ from board_graphic import BoardGraphic
 
 
 class Board:
-    def __init__(self):
+    def __init__(self) -> None:
         self.state: list[list[int]] = []
         self.board_graphic: BoardGraphic = None
 
