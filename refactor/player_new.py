@@ -20,12 +20,8 @@ class Player:
     ):
         tile = self.hand[index]
 
-        if self.game.board.add_tile(tile, front):
+        if self.game.board.add_tile(tile, front, is_first_move=is_first_move):
             self.hand.pop(index)
-            tile_sprite = self.game.create_tile_sprite(tile[0], tile[1], 0)
-            self.game.board.board_graphic.place_on_board(
-                tile_sprite, is_first_move, front=front
-            )
 
             tile_orientation_str = "na frente" if front else "atrás"
             print(f"{self.name} jogou {tile_orientation_str}: {tile}")

@@ -4,7 +4,6 @@ from board import Board
 from player_new import Player
 from controllable_player import ControllablePlayer
 from game_object.game_object import GameObject
-from geometry.vector2d import Vector2d
 
 from game_state_sprite import GameStateSprite
 from window import Window
@@ -12,7 +11,7 @@ from window import Window
 
 class GameState:
     def __init__(self) -> None:
-        self.board: Board = Board()
+        self.board: Board = Board(self)
         self.players: list[Player] = [
             ControllablePlayer(self, "Jogador principal"),
             Player(self, "Jogador 2"),
@@ -39,29 +38,16 @@ class GameState:
     def create_player_hand_sprite(self) -> None:
         player_hand = self.my_player.hand
         for available_tile in player_hand:
-            tile_sprite: GameObject = self.create_tile_sprite(
-                first_tile_value=available_tile[0],
-                second_tile_value=available_tile[1],
-                rotation=90,
+            tile_sprite: GameObject = (
+                self.board.board_graphic.create_tile_sprite(
+                    first_tile_value=available_tile[0],
+                    second_tile_value=available_tile[1],
+                    rotation=90,
+                    game_state=self,
+                )
             )
             self.my_player.hand_sprites.append(tile_sprite)
         self.window.game_resources = self.my_player.hand_sprites
-
-    def create_tile_sprite(
-        self,
-        first_tile_value: int,
-        second_tile_value: int,
-        rotation: int,
-    ) -> GameObject:
-        img_path: str = f"{first_tile_value}{second_tile_value}.png"
-        tile_sprite = GameObject(
-            Vector2d(0, 62.5),
-            img_path=img_path,
-            rotation=rotation,
-            batch=self.window.game_batch,
-            game_state=self,
-        )
-        return tile_sprite
 
     @property
     def ongoing(self):

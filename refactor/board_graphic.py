@@ -1,8 +1,13 @@
 from window import Window
 from game_object import game_object
 from geometry import rectangle, vector2d
+from geometry.vector2d import Vector2d
 
 from tile.available_position import AvailablePosition
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from game_state import GameState
 
 
 class BoardGraphic:
@@ -66,6 +71,23 @@ class BoardGraphic:
                     self._front_index
                 ].oposite_position,
             )
+
+    def create_tile_sprite(
+        self,
+        first_tile_value: int,
+        second_tile_value: int,
+        rotation: int,
+        game_state: "GameState",
+    ) -> game_object.GameObject:
+        img_path: str = f"{first_tile_value}{second_tile_value}.png"
+        tile_sprite = game_object.GameObject(
+            Vector2d(0, 62.5),
+            img_path=img_path,
+            rotation=rotation,
+            batch=self.window.game_batch,
+            game_state=game_state,
+        )
+        return tile_sprite
 
     def place_player_hand(
         self, player_sprites: list[game_object.GameObject], gap
