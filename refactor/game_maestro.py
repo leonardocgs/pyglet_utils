@@ -13,46 +13,49 @@ class GameMaestro:
 
     def current_game(self, time):
 
-        if self.game.my_turn and self.game.choose_tile_index >= 0:
+        if self.game.ongoing:
+            if self.game.my_turn and self.game.choose_tile_index >= 0:
 
-            player = self.game.my_player
+                player = self.game.my_player
 
-            if player.can_play:
-                print(self.game.choose_tile_index)
+                if player.can_play:
+                    print(self.game.choose_tile_index)
 
-                chosen: int = self.game.choose_tile_index
-                valid_orientations = self.game.board.valid_tile_orientations(
-                    player.hand[chosen]
-                )
-
-                if len(valid_orientations):
-                    front = (
-                        valid_orientations[0]
-                        if len(valid_orientations) == 1
-                        or not len(self.game.board.state)
-                        else bool(
-                            int(
-                                input(
-                                    f"1 - jogar na frente, 0 - jogar atrás: "
-                                )
-                            )
+                    chosen: int = self.game.choose_tile_index
+                    valid_orientations = (
+                        self.game.board.valid_tile_orientations(
+                            player.hand[chosen]
                         )
                     )
 
-                    print("--------------------")
-                    print("")
+                    if len(valid_orientations):
+                        front = (
+                            valid_orientations[0]
+                            if len(valid_orientations) == 1
+                            or not len(self.game.board.state)
+                            else bool(
+                                int(
+                                    input(
+                                        f"1 - jogar na frente, 0 - jogar atrás: "
+                                    )
+                                )
+                            )
+                        )
 
-                    played_tile = player.play_tile(chosen, front)
+                        print("--------------------")
+                        print("")
 
-                    if played_tile:
-                        player.pass_turn()
+                        played_tile = player.play_tile(chosen, front)
+
+                        if played_tile:
+                            player.pass_turn()
+                        else:
+                            print(f"UEPA! Você não pode jogar essa peça.")
                     else:
                         print(f"UEPA! Você não pode jogar essa peça.")
-                else:
-                    print(f"UEPA! Você não pode jogar essa peça.")
 
-            else:
-                player.pass_turn(True)
+                else:
+                    player.pass_turn(True)
         else:
             print("FIM DE JOGO!!!")
             print(f"{self.game.winner.name} venceu!")
