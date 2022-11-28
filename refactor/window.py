@@ -16,7 +16,7 @@ class Window(pyglet.window.Window):
         title=None,
         resizable=True,
         fullscreen=False,
-    ):
+    ) -> None:
         super().__init__(width, height, title, resizable, fullscreen)
         self.game_batch: pyglet.graphics.Batch = pyglet.graphics.Batch()
         self.game_resources: list[GameObject] = []

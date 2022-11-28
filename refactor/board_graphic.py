@@ -1,6 +1,6 @@
 from window import Window
 from game_object import game_object
-from geometry import rectangle, vector2d
+from geometry import rectangle
 from geometry.vector2d import Vector2d
 
 from tile.available_position import AvailablePosition

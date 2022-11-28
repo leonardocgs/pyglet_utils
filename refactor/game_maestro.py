@@ -1,9 +1,10 @@
 from game_state import GameState
 import pyglet
+import random
 
 
 class GameMaestro:
-    def __init__(self):
+    def __init__(self) -> None:
         self.game: GameState = GameState()
 
     def start_game(self):
@@ -11,7 +12,7 @@ class GameMaestro:
         pyglet.clock.schedule_interval(self.current_game, 1 / 50)
         pyglet.app.run()
 
-    def current_game(self, time):
+    def current_game(self, time) -> None:
 
         if self.game.ongoing:
             if self.game.my_turn and self.game.choose_tile_index >= 0:
@@ -33,13 +34,7 @@ class GameMaestro:
                             valid_orientations[0]
                             if len(valid_orientations) == 1
                             or not len(self.game.board.state)
-                            else bool(
-                                int(
-                                    input(
-                                        f"1 - jogar na frente, 0 - jogar atrás: "
-                                    )
-                                )
-                            )
+                            else bool(random.randrange(2))
                         )
 
                         print("--------------------")
@@ -50,14 +45,16 @@ class GameMaestro:
                         if played_tile:
                             player.pass_turn()
                         else:
-                            print(f"UEPA! Você não pode jogar essa peça.")
+                            print("UEPA! Você não pode jogar essa peça.")
                     else:
-                        print(f"UEPA! Você não pode jogar essa peça.")
+                        print("UEPA! Você não pode jogar essa peça.")
 
                 else:
                     player.pass_turn(True)
         else:
-            label = pyglet.text.Label(
+            if self.game.winner is None:
+                raise TypeError
+            pyglet.text.Label(
                 f"{self.game.winner.name} venceu!",
                 font_name="Times New Roman",
                 font_size=36,

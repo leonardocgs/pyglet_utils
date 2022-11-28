@@ -4,8 +4,9 @@ from player_new import Player
 from controllable_player import ControllablePlayer
 from game_object.game_object import GameObject
 from time import sleep
+from typing import Optional
 
-from game_state_sprite import GameStateSprite
+from board_graphic import BoardGraphic
 from window import Window
 
 
@@ -20,17 +21,18 @@ class GameState:
         ]
         self.fill_player_hands()
         self.turn: int = 0
-        self.winner: Player = None
+        self.winner: Optional[Player] = None
         self.accumulated_turn_skips: int = 0
         self.window = Window(
             height=1200, width=2000, fullscreen=True, title="Domino"
         )
-        self.game_state_sprite = GameStateSprite(self.window)
-        self.board.board_graphic = self.game_state_sprite._board_graphic
+        self.board.board_graphic = BoardGraphic(self.window)
         self.choose_tile_index: int = -1
 
     def create_initial_sprites(self):
         self.create_player_hand_sprite()
+        if self.board.board_graphic is None:
+            raise TypeError
         self.board.board_graphic.place_player_hand(
             self.my_player.hand_sprites, 20
         )
@@ -38,6 +40,8 @@ class GameState:
     def create_player_hand_sprite(self) -> None:
         player_hand = self.my_player.hand
         for available_tile in player_hand:
+            if self.board.board_graphic is None:
+                raise TypeError
             tile_sprite: GameObject = (
                 self.board.board_graphic.create_tile_sprite(
                     first_tile_value=available_tile[0],
@@ -88,7 +92,7 @@ class GameState:
                     player.hand.append(tiles.pop(randint(0, len(tiles) - 1)))
 
     def end_game(self) -> None:
-        current_winner: Player = None
+        current_winner: Optional[Player] = None
 
         for player in self.players:
             print(f"{player.name}: {player.points}")
@@ -97,7 +101,7 @@ class GameState:
 
         self.winner = current_winner
 
-    def next_turn(self) -> None:
+    def next_turn(self) -> list[int] | None:
         if self.accumulated_turn_skips >= len(self.players):
             print("")
             print("Fechou o jogo! Hora de contar os pontos")

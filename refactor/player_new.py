@@ -1,6 +1,5 @@
 from random import randint
 from typing import TYPE_CHECKING
-from time import sleep
 
 if TYPE_CHECKING:
     from game_state import GameState
@@ -8,7 +7,7 @@ if TYPE_CHECKING:
 
 class Player:
     def __init__(self, game: "GameState", name: str):
-        self.hand = []
+        self.hand: list[list[int]] = []
         self.game: "GameState" = game
         self.name: str = name
 
@@ -64,7 +63,7 @@ class Player:
         return len(self.valid_tiles)
 
     @property
-    def valid_tiles(self):
+    def valid_tiles(self) -> list[list[int]]:
         valid_tiles: list[list[int]] = []
         for tile in self.hand:
             if self.game.board.can_add_tile(
@@ -74,8 +73,8 @@ class Player:
         return valid_tiles
 
     @property
-    def valid_indexes(self):
-        valid_indexes: list[list[int]] = []
+    def valid_indexes(self) -> list[int]:
+        valid_indexes: list[int] = []
         index = 0
         for tile in self.hand:
             if self.game.board.can_add_tile(

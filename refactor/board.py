@@ -1,5 +1,6 @@
 from board_graphic import BoardGraphic
 from typing import TYPE_CHECKING
+from typing import Optional
 
 if TYPE_CHECKING:
     from game_state import GameState
@@ -8,7 +9,7 @@ if TYPE_CHECKING:
 class Board:
     def __init__(self, game_state: "GameState") -> None:
         self.state: list[list[int]] = []
-        self.board_graphic: BoardGraphic = None
+        self.board_graphic: Optional[BoardGraphic] = None
         self._game_state: "GameState" = game_state
 
     def can_add_tile(self, tile: list[int], front: bool = True):
@@ -45,6 +46,8 @@ class Board:
 
         if can_add:
             flipped_tile = tile if can_add > 0 else tile[::-1]
+            if self.board_graphic is None:
+                raise TypeError
             tile_sprite = self.board_graphic.create_tile_sprite(
                 flipped_tile[0], flipped_tile[1], 0, self._game_state
             )
