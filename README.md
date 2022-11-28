@@ -1,4 +1,4 @@
-# Dómino
+# Dominó
 
 ## Como iniciar o jogo?
 
