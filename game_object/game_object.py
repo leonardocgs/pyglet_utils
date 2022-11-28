@@ -82,7 +82,7 @@ class GameObject:
         self.game_state: GameState = game_state
 
     def _create_image(self, img_path):
-        pyglet.resource.path = ["../Dominoes/images"]
+        pyglet.resource.path = ["./Dominoes/images"]
         pyglet.resource.reindex()
         self._image = pyglet.resource.image(img_path)
         self._image.anchor_x = self._image.width // 2
