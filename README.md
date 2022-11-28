@@ -8,13 +8,5 @@ $ python3 main.py
 
 ## Como jogar ?
 
-- O jogador clica e arrasta o mouse até a peça do tabuleiro que deseja jogar
-- Após isso o computador joga sua peça
-
-## Todo
-
-- [ ] Aperfeiçoar algoritmo de disposição das peças
-- [ ] Adicionar o cava caso não possua peça disponível para jogar
-- [ ] Adicionar condições de vitória
-- [ ] Adicionar Menu
-- [ ] Adicionar mais jogadores
+- O jogador clica na peça que deseja jogar. Caso o jogador não tenha como jogar, clique em qualquer uma das suas peças pra passar o seu turno.
+- O jogo possui 4 jogadores, você e 3 computadores.
