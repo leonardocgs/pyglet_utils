@@ -1,41 +1,35 @@
 import pyglet
 
-from game_object import GameObject
-from Rectangle import Rectangle
-from Vector2d import Vector2d
+
+from geometry import rectangle, vector2d
+
+
+from time import sleep
+from game_object.game_object import GameObject
 
 
 class Window(pyglet.window.Window):
     def __init__(
         self,
-        gameBatches: list[pyglet.graphics.Batch] = [],
-        gameResources: list[GameObject] = [],
         width=None,
         height=None,
         title=None,
         resizable=True,
         fullscreen=False,
-    ):
+    ) -> None:
         super().__init__(width, height, title, resizable, fullscreen)
-        self.gameResources = gameResources
-        self.gameBatches = gameBatches
-        self.game_agents = []
+        self.game_batch: pyglet.graphics.Batch = pyglet.graphics.Batch()
+        self.game_resources: list[GameObject] = []
 
     @property
     def rect(self):
         half_width = self.width / 2
         half_height = self.height / 2
-        return Rectangle(
-            Vector2d(half_width, half_height), self.width, self.height
+        return rectangle.Rectangle(
+            vector2d.Vector2d(half_width, half_height),
+            self.width,
+            self.height,
         )
-
-    @property
-    def top(self):
-        return self.rect.top
-
-    @property
-    def bottom(self):
-        return self.rect.bottom
 
     @property
     def measurements(self):
@@ -49,6 +43,18 @@ class Window(pyglet.window.Window):
         }
 
     @property
+    def top(self):
+        return self.rect.top
+
+    @property
+    def bottom(self):
+        return self.rect.bottom
+
+    @property
+    def center(self):
+        return self.rect.center
+
+    @property
     def left(self):
         return self.rect.left
 
@@ -57,15 +63,13 @@ class Window(pyglet.window.Window):
         return self.rect.right
 
     def on_mouse_press(self, x, y, button, modifiers):
-        for gameResource in self.gameResources:
-            gameResource.on_mouse_press(x, y, button, modifiers)
+        for game_resources in self.game_resources:
+            game_resources.on_mouse_press(x, y, button, modifiers)
 
     def on_mouse_release(self, x, y, button, modifiers):
-        for gameResource in self.gameResources:
-            gameResource.on_mouse_release(x, y, button, modifiers)
+        for game_resources in self.game_resources:
+            game_resources.on_mouse_release(x, y, button, modifiers)
 
     def on_draw(self):
-
         self.clear()
-        for gameBatch in self.gameBatches:
-            gameBatch.draw()
+        self.game_batch.draw()
